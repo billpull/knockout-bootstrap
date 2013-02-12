@@ -31,4 +31,9 @@ TODO: placements
 </script>
 ```
 
-#TODO: Modals, Alerts, Etc
+TODO:
+- project structure
+- tests
+- build script for minified
+- Modals, Alerts, Etc
+
