@@ -6,7 +6,7 @@ knockout-bootstrap
 - jQuery ( no minimum version identified yet )
 - bootstrap 
 
-A plugin that adds custom bindings for twitter bootstrap objects such as tooltips and popovers.
+A plugin that adds custom bindings for twitter bootstrap plugins such as tooltips and popovers.
 
 ## Examples
 
@@ -30,3 +30,5 @@ TODO: placements
   <!-- Insert Popover Content -->
 </script>
 ```
+
+#TODO: Modals, Alerts, Etc
