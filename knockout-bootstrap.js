@@ -69,12 +69,31 @@ ko.bindingHandlers.popover = {
 
         // bind popover to element click
 		$(element).bind(trigger, function () {
-			$(this).popover(popoverOptions).popover('toggle');
+			var popoverAction = 'show';
+			var popoverTriggerEl = $(this);
+
+			// popovers that hover should be toggled on hover
+			// not stay there on mouseout
+			if (trigger === 'hover') {
+				popoverAction = 'toggle';
+			}
+
+			// show/toggle popover
+			popoverTriggerEl.popover(popoverOptions).popover(popoverAction);
+
+			// hide other popovers and bind knockout to the popover elements
+			var popoverInnerEl = $('#' + domId);
+			$('.ko-popover').not(popoverInnerEl).parents('.popover').remove();
 		
 			// if the popover is visible bind the view model to our dom ID
 			if($('#' + domId).is(':visible')){
                 ko.applyBindingsToDescendants(childBindingContext, $('#' + domId)[0]);
             }
+            
+            // bind close button to remove popover
+            $(document).on('click', '[data-dismiss="popover"]', function (e) {
+                popoverTriggerEl.popover('hide');
+            });
 		});
 
 		// Also tell KO *not* to bind the descendants itself, otherwise they will be bound twice
