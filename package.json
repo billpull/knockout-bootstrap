@@ -1,6 +1,6 @@
 {
   "name": "knockout-bootstrap",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Knockout Bindings for Bootstrap Widgets",
   "main": "src/knockout-bootstrap.js",
   "directories": {
@@ -19,7 +19,7 @@
     "knockout-bootstrap",
     "bindings"
   ],
-  dependencies : {
+  "dependencies": {
     "jQuery": ">= 1.7.4",
     "twitter-bootstrap": ">= 2.1.1"
   },
