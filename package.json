@@ -1,6 +1,6 @@
 {
   "name": "knockout-bootstrap",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "Knockout Bindings for Bootstrap Widgets",
   "main": "src/knockout-bootstrap.js",
   "directories": {
@@ -19,6 +19,10 @@
     "knockout-bootstrap",
     "bindings"
   ],
+  dependencies : {
+    "jQuery": ">= 1.7.4",
+    "twitter-bootstrap": ">= 2.1.1"
+  },
   "author": "Bill Pullen",
   "license": "MIT",
   "readmeFilename": "README.md"
