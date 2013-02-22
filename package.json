@@ -1,0 +1,25 @@
+{
+  "name": "knockout-bootstrap",
+  "version": "0.1.0",
+  "description": "Knockout Bindings for Bootstrap Widgets",
+  "main": "src/knockout-bootstrap.js",
+  "directories": {
+    "example": "examples"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/billpull/knockout-bootstrap.git"
+  },
+  "keywords": [
+    "knockout",
+    "bootstrap",
+    "knockout-bootstrap",
+    "bindings"
+  ],
+  "author": "Bill Pullen",
+  "license": "MIT",
+  "readmeFilename": "README.md"
+}
