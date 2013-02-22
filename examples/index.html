@@ -57,6 +57,9 @@
                         <li class=""><a href="#overview"><i class="icon-chevron-right"></i> Overview</a></li>
                         <li class=""><a href="#tooltip"><i class="icon-chevron-right"></i> Tooltip</a></li>
                         <li class=""><a href="#popover"><i class="icon-chevron-right"></i> Popover</a></li>
+                        <li class=""><a href="#alert"><i class="icon-chevron-right"></i> Alert</a></li>
+                        <li class=""><a href="#progress"><i class="icon-chevron-right"></i> Progress Bar</a></li>
+                        <li class=""><a href="#typeahead"><i class="icon-chevron-right"></i> Typeahead</a></li>
                     </ul>
                 </div>
                 <div class="span9">
@@ -207,6 +210,200 @@
                           </tbody>
                         </table>
                     </section>
+                    <section id="alert">
+                        <div class="page-header">
+                            <h1>Alerts</h1>
+                        </div>
+                        <h2>Examples</h2>
+                        <div class="bs-docs-example">
+                            <div data-bind="foreach: alerts">
+                                <div data-bind="alert: $data"></div>
+                            </div>
+                        </div>
+<pre class="prettyprint linenums">
+&lt;!-- View Code --&gt;
+&lt;div data-bind="foreach: alerts"&gt;
+    &lt;div data-bind="alert: $data">&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- View Model --&gt;
+var ViewModel = function() {
+    //....
+    //...
+    self.alerts = ko.observableArray([
+                        {'message': 'Here is an Error', 'priority': 'error'},
+                        {'message': 'Here is a Warning', 'priority': 'warning'},
+                        {'message': 'Here is a Success', 'priority': 'success'},
+                        {'message': 'Here is some Info', 'priority': 'info'}
+                    ]);
+    //....
+    //...
+};
+</pre>
+    
+                        <h3>Options</h3>
+                        <table class="table table-bordered table-striped">
+                          <thead>
+                           <tr>
+                             <th style="width: 100px;">Name</th>
+                             <th style="width: 100px;">type</th>
+                             <th style="width: 50px;">default</th>
+                             <th>description</th>
+                           </tr>
+                          </thead>
+                          <tbody>
+                           <tr>
+                             <td>message</td>
+                             <td>string</td>
+                             <td>''</td>
+                             <td>The message to be displayed in the alert</td>
+                           </tr>
+                           <tr>
+                             <td>priority</td>
+                             <td>string</td>
+                             <td>''</td>
+                             <td>The priority of the alert - error | warning | success | info</td>
+                           </tr>
+                          </tbody>
+                        </table>
+                    </section>
+                    <section id="progress">
+                        <div class="page-header">
+                            <h1>Progress Bar</h1>
+                        </div>
+                        <h2>Examples</h2>
+                        <div class="bs-docs-example">
+                            <form>
+                                <label>Update Progress Value Observable</label>
+                                <input type="text" data-bind="value: progressVal, valueUpdate:'afterkeydown'" />
+                            </form>
+                            <div data-bind="progress: 'progressWidth'"></div>
+                        </div>
+<pre class="prettyprint linenums">
+&lt;!-- View Code --&gt;
+&lt;form&gt;
+    &lt;label&gt;Update Progress Value Observable&lt;/label&gt;
+    &lt;input type="text" data-bind="value: progressVal, valueUpdate:'afterkeydown'" /&gt;
+&lt;/form&gt;
+&lt;div data-bind="progress: 'progressWidth'"&gt;&lt;/div&gt;
+
+&lt;!-- View Model --&gt;
+var ViewModel = function() {
+    //....
+    //...
+    self.progressVal = ko.observable(10);
+    self.progressWidth = ko.computed(function(){
+        return self.progressVal() + '%';
+    }, self);
+    //....
+    //...
+};
+</pre>
+                        <h3>Options</h3>
+                        <table class="table table-bordered table-striped">
+                          <thead>
+                           <tr>
+                             <th style="width: 100px;">Name</th>
+                             <th style="width: 100px;">type</th>
+                             <th style="width: 50px;">default</th>
+                             <th>description</th>
+                           </tr>
+                          </thead>
+                          <tbody>
+                           <tr>
+                             <td>width computed</td>
+                             <td>string</td>
+                             <td>''</td>
+                             <td>the name of the computed observable that returns the width percentage</td>
+                           </tr>
+                          </tbody>
+                        </table>
+                    </section>
+                    <section id="typeahead">
+                        <div class="page-header">
+                            <h1>Typeahead</h1>
+                        </div>
+                        <h2>Examples</h2>
+                        <p>
+                            Typeahead input with a data source as an observable array. Pass a reference
+                            to the <code>data-bind="typeahead:"</code> binding and the items from that observable
+                            array will be shown as suggestions in the input box. To show the binding nature of this
+                            feature the example allows you to add and remove items from the array.
+                         <div class="bs-docs-example">
+                            <div class="row">
+                                <div class="span4">
+                                    <form>
+                                        <label>Javascript Frameworks</label>
+                                        <input type="text" data-bind="typeahead: jsFrameworks" />
+                                    </form>
+                                    <form data-bind="submit: addFramework">
+                                        <label>Add a framework</label>
+                                        <input type="text" data-bind="value: frameworkToAdd, valueUpdate:'afterkeydown'" />
+                                        <div class="form-actions">
+                                            <button class="btn" type="submit" data-bind="enable: frameworkToAdd().length > 0">Add</button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="well span4">
+                                    <ul class="nav nav-list" data-bind="foreach: jsFrameworks">
+                                        <li>
+                                            <span data-bind="text: $data"></span>
+                                            <span class="icon-remove" data-bind="click: $root.removeFramework"></span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+<pre class="prettyprint linenums">
+&lt;!-- View Code --&gt;
+&lt;div class="row"&gt;
+    &lt;div class="span4"&gt;
+        &lt;form&gt;
+            &lt;label&gt;Javascript Frameworks&lt;/label&gt;
+            &lt;input type="text" data-bind="typeahead: jsFrameworks" /&gt;
+        &lt;/form&gt;
+        &lt;form data-bind="submit: addFramework"&gt;
+            &lt;label&gt;Add a framework&lt;/label&gt;
+            &lt;input type="text" data-bind="value: frameworkToAdd, valueUpdate:'afterkeydown'" /&gt;
+            &lt;div class="form-actions"&gt;
+                &lt;button class="btn" type="submit" data-bind="enable: frameworkToAdd().length > 0"&gt;Add&lt;/button&gt;
+            &lt;/div&gt;
+        &lt;/form&gt;
+    &lt;/div&gt;
+    &lt;div class="well span4"&gt;
+        &lt;ul class="nav nav-list" data-bind="foreach: jsFrameworks"&gt;
+            &lt;li&gt;
+                &lt;span data-bind="text: $data"&gt;&lt;/span&gt;
+                &lt;span class="icon-remove" data-bind="click: $root.removeFramework"&gt;&lt;/span&gt;
+            &lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- View Model --&gt;
+var ViewModel = function() {
+    //....
+    //...
+    self.jsFrameworks = ko.observableArray([
+            'Angular',
+            'Canjs',
+            'Batman',
+            //...
+        ]);
+
+    self.frameworkToAdd = ko.observable("");
+    self.addFramework = function() {
+        self.jsFrameworks.push(self.frameworkToAdd());
+    };
+
+    self.removeFramework = function(framework) {
+        self.jsFrameworks.remove(framework);
+    };
+    //....
+    //...
+};
+</pre>
+                    </section>
                 </div>
             </div>
         </div>
@@ -223,7 +420,42 @@
             var ExampleViewModel = function () {
                 var self = this;
 
-                self.popoverBindingHeader = ko.observable('Binding in A Popover')
+                self.popoverBindingHeader = ko.observable('Binding in A Popover');
+                self.alerts = ko.observableArray([
+                        {'message': 'Here is an Error', 'priority': 'error'},
+                        {'message': 'Here is a Warning', 'priority': 'warning'},
+                        {'message': 'Here is a Success', 'priority': 'success'},
+                        {'message': 'Here is some Info', 'priority': 'info'}
+                    ]);
+                self.progressVal = ko.observable(10);
+                self.progressWidth = ko.computed(function(){
+                    return self.progressVal() + '%';
+                }, self);
+
+                self.jsFrameworks = ko.observableArray([
+                        'Angular',
+                        'Canjs',
+                        'Batman',
+                        'Meteor',
+                        'Ember',
+                        'Backbone',
+                        'Knockout',
+                        'Knockback',
+                        'Spine',
+                        'Sammy',
+                        'YUI',
+                        'Closure',
+                        'jQuery'
+                    ]);
+
+                self.frameworkToAdd = ko.observable("");
+                self.addFramework = function() {
+                    self.jsFrameworks.push(self.frameworkToAdd());
+                };
+
+                self.removeFramework = function(framework) {
+                    self.jsFrameworks.remove(framework);
+                };
             };
 
             $(function(){

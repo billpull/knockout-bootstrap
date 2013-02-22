@@ -9,6 +9,57 @@ function guid() {
     return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
 }
 
+// Bind twitter typeahead
+ko.bindingHandlers.typeahead = {
+	init: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+		var $element = $(element);
+		var typeaheadArr = ko.utils.unwrapObservable(valueAccessor());
+
+		$element.attr("autocomplete", "off")
+				.typeahead({
+					'source' : typeaheadArr
+				});
+	}
+};
+
+// Bind Twitter Progress
+ko.bindingHandlers.progress = {
+	init: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+		var $element = $(element);
+
+		var bar = $('<div/>', {
+			'class':'bar',
+			'data-bind':'style: { width:' + valueAccessor() + ' }'
+		});
+
+		$element.attr('id', guid())
+			.addClass('progress progress-info')
+			.append(bar);
+
+		ko.applyBindingsToDescendants(viewModel, $element[0]);
+	}
+}
+
+// Bind Twitter Alert
+ko.bindingHandlers.alert = {
+    init: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+    	var $element = $(element);
+    	var alertInfo = ko.utils.unwrapObservable(valueAccessor());
+
+    	var dismissBtn = $('<button/>', {
+    		'type':'button',
+    		'class':'close',
+    		'data-dismiss':'alert'
+    	}).html('&times;');
+
+    	var alertMessage = $('<p/>').html(alertInfo.message);
+
+    	$element.addClass('alert alert-'+alertInfo.priority)
+    			.append(dismissBtn)
+    			.append(alertMessage);
+    }
+};
+
 // Bind Twitter Tooltip
 ko.bindingHandlers.tooltip = {
     init: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
