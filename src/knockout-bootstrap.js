@@ -9,9 +9,20 @@ function guid() {
     return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
 }
 
+// Outer HTML
+(function($){
+  $.fn.outerHtml = function() {
+    if (this.length == 0) return false;
+    var elem = this[0], name = elem.tagName.toLowerCase();
+    if (elem.outerHTML) return elem.outerHTML;
+    var attrs = $.map(elem.attributes, function(i) { return i.name+'="'+i.value+'"'; }); 
+    return "<"+name+(attrs.length > 0 ? " "+attrs.join(" ") : "")+">"+elem.innerHTML+"</"+name+">";
+  };
+})(jQuery);
+
 // Bind twitter typeahead
 ko.bindingHandlers.typeahead = {
-	init: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+    init: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
 		var $element = $(element);
 		var typeaheadArr = ko.utils.unwrapObservable(valueAccessor());
 
@@ -133,7 +144,7 @@ ko.bindingHandlers.popover = {
 
 		// set content options
 		options = {
-			content: tmplDom[0].outerHTML,
+			content: $(tmplDom[0]).outerHtml(),
 			title: popoverTitle
 		};
 
