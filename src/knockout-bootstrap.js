@@ -121,7 +121,18 @@ ko.bindingHandlers.popover = {
 		var tmplId = popoverBindingValues.template;
 
 		// set popover trigger
-		var trigger = typeof popoverBindingValues.trigger !== undefined ? 'click' : popoverBindingValues.trigger;
+		var trigger = 'click';
+
+		if (popoverBindingValues.trigger) {
+			trigger = popoverBindingValues.trigger;
+		}
+
+		// update triggers
+		if (trigger === 'hover') {
+            trigger = 'mouseenter mouseleave';
+        } else if (trigger === 'focus') {
+            trigger = 'focus blur';
+        }
 
 		// set popover placement
 		var placement = popoverBindingValues.placement;
@@ -162,7 +173,7 @@ ko.bindingHandlers.popover = {
 
 			// popovers that hover should be toggled on hover
 			// not stay there on mouseout
-			if (trigger === 'hover') {
+			if (trigger !== 'click') {
 				popoverAction = 'toggle';
 			}
 
