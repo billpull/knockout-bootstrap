@@ -163,6 +163,10 @@ ko.bindingHandlers.popover = {
 			options.placement = placement;
 		}
 
+		if (popoverBindingValues.container) {
+			options.container = popoverBindingValues.container;
+		}
+
 		// Need to copy this, otherwise all the popups end up with the value of the last item
         var popoverOptions = $.extend({}, ko.bindingHandlers.popover.options, options);
 
