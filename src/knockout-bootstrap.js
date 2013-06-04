@@ -22,15 +22,19 @@ function guid() {
 
 // Bind twitter typeahead
 ko.bindingHandlers.typeahead = {
-    init: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
-		var $element = $(element);
-		var typeaheadArr = ko.utils.unwrapObservable(valueAccessor());
-
-		$element.attr("autocomplete", "off")
+    init: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+        var $element = $(element);
+        var allBindings = allBindingsAccessor();
+        var typeaheadArr = ko.utils.unwrapObservable(valueAccessor());
+        
+        $element.attr("autocomplete", "off")
 				.typeahead({
-					'source' : typeaheadArr
+				    'source': typeaheadArr,
+				    'minLength': allBindings.minLength,
+				    'items': allBindings.items,
+				    'updater': allBindings.updater
 				});
-	}
+    }
 };
 
 // Bind Twitter Progress
