@@ -12,7 +12,10 @@ A plugin that adds custom bindings for twitter bootstrap plugins such as tooltip
 
 [Download](https://raw.github.com/billpull/knockout-bootstrap/master/build/knockout-bootstrap.min.js)
 
+#### Packages
 npm-install knockout-bootstrap
+
+[NuGet](https://nuget.org/packages/knockout-bootstrap/0.2.1)
 
 **License**: MIT [http://www.opensource.org/licenses/mit-license.php](http://www.opensource.org/licenses/mit-license.php)
 
