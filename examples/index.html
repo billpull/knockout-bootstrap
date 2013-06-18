@@ -161,7 +161,7 @@
                         </p>
                         <div class="bs-docs-example">
                             <h1 data-bind="text: popoverBindingHeader"></h1>
-                            <button class="btn btn-large btn-primary" data-bind="popover: {template: 'popoverBindingTemplate', title: 'Oh Yea Binding'}">Launch Binding Popover</button>
+                            <button class="btn btn-large btn-primary" data-bind="popover: {template: 'popoverBindingTemplate', placement: 'right', title: 'Oh Yea Binding'}">Launch Binding Popover</button>
                         </div>
 <pre class="prettyprint linenums">
 &lt;h1 data-bind="text: popoverBindingHeader"&gt;&lt;/h1&gt;
@@ -169,13 +169,19 @@
     Launch Binding Popover
 &lt;/button&gt;
 
-&lt;script type="text/html" id="popoverBindingTemplate"&gt;
-    &lt;button class="close pull-right" type="button" data-dismiss="popover"&gt;&times&lt;/button&gt;
-    &lt;form&gt;
-        &lt;label&gt;Popover Binding Header&lt;/label&gt;
-        &lt;input type="text" data-bind="value: popoverBindingHeader, valueUpdate:'afterkeydown'" /&gt;
-    &lt;/form&gt;
-&lt;/script&gt;
+&lt;script type=&quot;text/html&quot; id=&quot;popoverBindingTemplate&quot;&gt;
+            &lt;button class=&quot;close pull-right&quot; type=&quot;button&quot; data-dismiss=&quot;popover&quot;&gt;&amp;times&lt;/button&gt;
+            &lt;form&gt;
+                &lt;label&gt;Popover Binding Header&lt;/label&gt;
+                &lt;input type=&quot;text&quot; data-bind=&quot;value: popoverBindingHeader, valueUpdate:&#39;afterkeydown&#39;&quot; /&gt;
+                &lt;strong&gt;Foreach binding:&lt;/strong&gt;
+                &lt;table class=&quot;table table-striped&quot;&gt;
+                      &lt;tbody data-bind=&quot;foreach: colors&quot;&gt;
+                        &lt;tr&gt;&lt;td&gt;&lt;span data-bind=&quot;text: $data&quot;&gt;&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;
+                      &lt;/tbody&gt;
+                &lt;/table&gt;
+            &lt;/form&gt;
+        &lt;/script&gt;
 </pre>
                         <h3>Options</h3>
                         <table class="table table-bordered table-striped">
@@ -453,6 +459,16 @@ var ViewModel = function() {
                         'jQuery'
                     ]);
 
+                self.colors = ko.observableArray([
+                        'Red',
+                        'Green',
+                        'Blue',
+                        'Brown',
+                        'Yellow',
+                        'White',
+                        'Black'
+                    ]);
+
                 self.frameworkToAdd = ko.observable("");
                 self.addFramework = function() {
                     self.jsFrameworks.push(self.frameworkToAdd());
@@ -482,7 +498,13 @@ var ViewModel = function() {
             <button class="close pull-right" type="button" data-dismiss="popover">&times</button>
             <form>
                 <label>Popover Binding Header</label>
-                <input type="text" data-bind="value: popoverBindingHeader, valueUpdate:'afterkeydown'" />
+                <input type="text" data-bind="value: popoverBindingHeader, valueUpdate:'afterkeydown' " />
+                <strong>Foreach binding:</strong>
+                <table class="table table-striped">
+                      <tbody data-bind="foreach: colors">
+                        <tr><td><span data-bind="text: $data"></span></td></tr>
+                      </tbody>
+                </table>
             </form>
         </script>
     </body>
