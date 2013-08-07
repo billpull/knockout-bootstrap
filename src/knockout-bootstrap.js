@@ -181,25 +181,28 @@ ko.bindingHandlers.popover = {
                  *  */
 
                 var triggerElementPosition = $(element).offset().top;
+                var triggerElementLeft = $(element).offset().left;
                 var triggerElementHeight = $(element).outerHeight();
+                var triggerElementWidth = $(element).outerWidth();
 
                 var popover = $(popoverInnerEl).parents('.popover');
                 var popoverHeight = popover.outerHeight();
+                var popoverWidth = popover.outerWidth();
                 var arrowSize = 10;
 
-                switch(popoverOptions.placement)
-                {
+                switch (popoverOptions.placement) {
                     case 'left':
                     case 'right':
-                        popover.offset({top: triggerElementPosition - popoverHeight / 2 + triggerElementHeight / 2});
+                        popover.offset({ top: triggerElementPosition - popoverHeight / 2 + triggerElementHeight / 2 });
                         break;
                     case 'top':
-                        popover.offset({top: triggerElementPosition - popoverHeight - arrowSize});
+                        popover.offset({ top: triggerElementPosition - popoverHeight - arrowSize, left: triggerElementLeft - popoverWidth / 2 + triggerElementWidth / 2 });
                         break;
                     case 'bottom':
-                        popover.offset({top: triggerElementPosition + triggerElementHeight + arrowSize});
+                        popover.offset({ top: triggerElementPosition + triggerElementHeight + arrowSize, left:triggerElementLeft - popoverWidth/2 + triggerElementWidth/2});
                 }
             }
+
             
             // bind close button to remove popover
             $(document).on('click', '[data-dismiss="popover"]', function (e) {
