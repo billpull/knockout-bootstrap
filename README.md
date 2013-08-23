@@ -17,5 +17,7 @@ npm-install knockout-bootstrap
 
 [NuGet](https://nuget.org/packages/knockout-bootstrap/0.2.1)
 
+[CDNJS](//cdnjs.cloudflare.com/ajax/libs/knockout-bootstrap/0.2.1/knockout-bootstrap.min.js)
+
 **License**: MIT [http://www.opensource.org/licenses/mit-license.php](http://www.opensource.org/licenses/mit-license.php)
 
