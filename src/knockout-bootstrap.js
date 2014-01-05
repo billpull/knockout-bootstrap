@@ -102,6 +102,9 @@ ko.bindingHandlers.popover = {
 		// set popover template id
 		var tmplId = popoverBindingValues.template;
 
+		// set data for template
+        var data = popoverBindingValues.data;
+
 		// set popover trigger
 		var trigger = 'click';
 
@@ -120,7 +123,19 @@ ko.bindingHandlers.popover = {
 		var placement = popoverBindingValues.placement;
 
 		// get template html
-		var tmplHtml = $('#' + tmplId).html();
+		if (!data) {
+          var tmplHtml = $('#' + tmplId).html();
+        } else {
+          var tmplHtml = function () {
+            var container = $('<div data-bind="template: { name: template, if: data, data: data }"></div>');
+
+            ko.applyBindings({
+                template: tmplId,
+                data: data
+            }, container[0]);
+            return container;
+          };
+        }
 
 		// create unique identifier to bind to
 		var uuid = guid();
@@ -172,8 +187,6 @@ ko.bindingHandlers.popover = {
 		
 			// if the popover is visible bind the view model to our dom ID
 			if($('#' + domId).is(':visible')){
-
-                ko.applyBindingsToDescendants(childBindingContext, $('#' + domId)[0]);
 
                 /* Since bootstrap calculates popover position before template is filled,
                  * a smaller popover height is used and it appears moved down relative to the trigger element.
