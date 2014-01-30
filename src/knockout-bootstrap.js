@@ -81,7 +81,7 @@ ko.bindingHandlers.tooltip = {
     var $element, options, tooltip;
     options = ko.utils.unwrapObservable(valueAccessor());
     $element = $(element);
-    tooltip = $element.data('tooltip');
+    tooltip = $element.data('bs.tooltip');
     if (tooltip) {
       $.extend(tooltip.options, options);
     } else {
