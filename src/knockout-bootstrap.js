@@ -15,7 +15,7 @@ function guid() {
     if (this.length == 0) return false;
     var elem = this[0], name = elem.tagName.toLowerCase();
     if (elem.outerHTML) return elem.outerHTML;
-    var attrs = $.map(elem.attributes, function(i) { return i.name+'="'+i.value+'"'; }); 
+    var attrs = $.map(elem.attributes, function(i) { return i.name+'="'+i.value+'"'; });
     return "<"+name+(attrs.length > 0 ? " "+attrs.join(" ") : "")+">"+elem.innerHTML+"</"+name+">";
   };
 })(jQuery);
@@ -27,7 +27,7 @@ function setupKoBootstrap (koObject) {
 	        var $element = $(element);
 	        var allBindings = allBindingsAccessor();
 	        var typeaheadArr = koObject.utils.unwrapObservable(valueAccessor());
-	        
+
 	        $element.attr("autocomplete", "off")
 					.typeahead({
 					    'source': typeaheadArr,
@@ -94,12 +94,12 @@ function setupKoBootstrap (koObject) {
 	// Bind Twitter Popover
 	koObject.bindingHandlers.popover = {
 		init: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
-			// read popover options 
+			// read popover options
 			var popoverBindingValues = koObject.utils.unwrapObservable(valueAccessor());
 
-			// set popover title 
+			// set popover title
 			var popoverTitle = popoverBindingValues.title;
-			
+
 			// set popover template id
 			var tmplId = popoverBindingValues.template;
 
@@ -185,7 +185,7 @@ function setupKoBootstrap (koObject) {
 				// hide other popovers and bind knockout to the popover elements
 				var popoverInnerEl = $('#' + domId);
 				$('.ko-popover').not(popoverInnerEl).parents('.popover').remove();
-			
+
 				// if the popover is visible bind the view model to our dom ID
 				if($('#' + domId).is(':visible')){
 
@@ -217,15 +217,12 @@ function setupKoBootstrap (koObject) {
 	                }
 	            }
 
-	            
+
 	            // bind close button to remove popover
 	            $(document).on('click', '[data-dismiss="popover"]', function (e) {
 	                popoverTriggerEl.popover('hide');
 	            });
 			});
-
-			// Also tell KO *not* to bind the descendants itself, otherwise they will be bound twice
-			return { controlsDescendantBindings: true };
 		},
 		options: {
 			placement: "right",
