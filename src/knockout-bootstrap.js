@@ -82,6 +82,30 @@ function setupKoBootstrap (koObject) {
 	    var $element, options, tooltip;
 	    options = koObject.utils.unwrapObservable(valueAccessor());
 	    $element = $(element);
+		
+		// If the title is an observable, make it auto-updating.
+		if (koObject.isObservable(options.title)) {
+			var isToolTipVisible = false;
+
+			$element.on('show.bs.tooltip', function() {
+	    		isToolTipVisible = true;
+			});
+			$element.on('hide.bs.tooltip', function () {
+				isToolTipVisible = false;
+			});
+			
+			// "true" is the bootstrap default.
+			var origAnimation = options.animation || true;
+			options.title.subscribe(function () {
+				if (isToolTipVisible) {
+					$element.data('bs.tooltip').options.animation = false; // temporarily disable animation to avoid flickering of the tooltip
+					$element.tooltip('fixTitle') // call this method to update the title
+							.tooltip('show');
+					$element.data('bs.tooltip').options.animation = origAnimation;
+				}
+			});
+		}
+		
 	    tooltip = $element.data('bs.tooltip');
 	    if (tooltip) {
 	      $.extend(tooltip.options, options);
@@ -152,7 +176,7 @@ function setupKoBootstrap (koObject) {
 			}).html(tmplHtml);
 
 			// set content options
-			options = {
+			var options = {
 				content: $(tmplDom[0]).outerHtml(),
 				title: popoverTitle
 			};
@@ -192,7 +216,7 @@ function setupKoBootstrap (koObject) {
 	                /* Since bootstrap calculates popover position before template is filled,
 	                 * a smaller popover height is used and it appears moved down relative to the trigger element.
 	                 * So we have to fix the position after the bind
-	                 *  */
+	                 */
 
 	                var triggerElementPosition = $(element).offset().top;
 	                var triggerElementLeft = $(element).offset().left;
@@ -206,6 +230,8 @@ function setupKoBootstrap (koObject) {
 
 	                switch (popoverOptions.placement) {
 	                    case 'left':
+							popover.offset({ top: triggerElementPosition - popoverHeight / 2 + triggerElementHeight / 2, left: triggerElementLeft - arrowSize - popoverWidth });
+							break;
 	                    case 'right':
 	                        popover.offset({ top: triggerElementPosition - popoverHeight / 2 + triggerElementHeight / 2 });
 	                        break;
@@ -213,7 +239,7 @@ function setupKoBootstrap (koObject) {
 	                        popover.offset({ top: triggerElementPosition - popoverHeight - arrowSize, left: triggerElementLeft - popoverWidth / 2 + triggerElementWidth / 2 });
 	                        break;
 	                    case 'bottom':
-	                        popover.offset({ top: triggerElementPosition + triggerElementHeight + arrowSize, left:triggerElementLeft - popoverWidth/2 + triggerElementWidth/2});
+	                        popover.offset({ top: triggerElementPosition + triggerElementHeight + arrowSize, left: triggerElementLeft - popoverWidth / 2 + triggerElementWidth / 2});
 	                }
 	            }
 
