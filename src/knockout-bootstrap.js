@@ -192,7 +192,7 @@ function setupKoBootstrap (koObject) {
 	                /* Since bootstrap calculates popover position before template is filled,
 	                 * a smaller popover height is used and it appears moved down relative to the trigger element.
 	                 * So we have to fix the position after the bind
-	                 *  */
+	                 */
 
 	                var triggerElementPosition = $(element).offset().top;
 	                var triggerElementLeft = $(element).offset().left;
@@ -213,7 +213,7 @@ function setupKoBootstrap (koObject) {
 	                        popover.offset({ top: triggerElementPosition - popoverHeight - arrowSize, left: triggerElementLeft - popoverWidth / 2 + triggerElementWidth / 2 });
 	                        break;
 	                    case 'bottom':
-	                        popover.offset({ top: triggerElementPosition + triggerElementHeight + arrowSize, left:triggerElementLeft - popoverWidth/2 + triggerElementWidth/2});
+	                        popover.offset({ top: triggerElementPosition + triggerElementHeight + arrowSize, left: triggerElementLeft - popoverWidth / 2 + triggerElementWidth / 2});
 	                }
 	            }
 
