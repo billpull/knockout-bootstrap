@@ -82,6 +82,30 @@ function setupKoBootstrap (koObject) {
 	    var $element, options, tooltip;
 	    options = koObject.utils.unwrapObservable(valueAccessor());
 	    $element = $(element);
+		
+		// If the title is an observable, make it auto-updating.
+		if (koObject.isObservable(options.title)) {
+			var isToolTipVisible = false;
+
+			$element.on('show.bs.tooltip', function() {
+	    		isToolTipVisible = true;
+			});
+			$element.on('hide.bs.tooltip', function () {
+				isToolTipVisible = false;
+			});
+			
+			// "true" is the bootstrap default.
+			var origAnimation = options.animation || true;
+			options.title.subscribe(function () {
+				if (isToolTipVisible) {
+					$element.data('bs.tooltip').options.animation = false; // temporarily disable animation to avoid flickering of the tooltip
+					$element.tooltip('fixTitle') // call this method to update the title
+							.tooltip('show');
+					$element.data('bs.tooltip').options.animation = origAnimation;
+				}
+			});
+		}
+		
 	    tooltip = $element.data('bs.tooltip');
 	    if (tooltip) {
 	      $.extend(tooltip.options, options);
