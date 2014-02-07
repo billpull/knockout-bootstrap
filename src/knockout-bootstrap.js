@@ -152,7 +152,7 @@ function setupKoBootstrap (koObject) {
 			}).html(tmplHtml);
 
 			// set content options
-			options = {
+			var options = {
 				content: $(tmplDom[0]).outerHtml(),
 				title: popoverTitle
 			};
