@@ -206,6 +206,8 @@ function setupKoBootstrap (koObject) {
 
 	                switch (popoverOptions.placement) {
 	                    case 'left':
+							popover.offset({ top: triggerElementPosition - popoverHeight / 2 + triggerElementHeight / 2, left: triggerElementLeft - arrowSize - popoverWidth });
+							break;
 	                    case 'right':
 	                        popover.offset({ top: triggerElementPosition - popoverHeight / 2 + triggerElementHeight / 2 });
 	                        break;
