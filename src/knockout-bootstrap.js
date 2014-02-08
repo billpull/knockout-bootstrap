@@ -1,275 +1,287 @@
+/*global: define */
+
 //UUID
 function s4() {
+    "use strict";
     return Math.floor((1 + Math.random()) * 0x10000)
-        .toString(16)
-        .substring(1);
+		.toString(16)
+		.substring(1);
 }
 
 function guid() {
+    "use strict";
     return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
 }
 
 // Outer HTML
-(function($){
-  $.fn.outerHtml = function() {
-    if (this.length == 0) return false;
-    var elem = this[0], name = elem.tagName.toLowerCase();
-    if (elem.outerHTML) return elem.outerHTML;
-    var attrs = $.map(elem.attributes, function(i) { return i.name+'="'+i.value+'"'; });
-    return "<"+name+(attrs.length > 0 ? " "+attrs.join(" ") : "")+">"+elem.innerHTML+"</"+name+">";
-  };
+(function ($) {
+    "use strict";
+    $.fn.outerHtml = function () {
+        if (this.length === 0) {
+            return false;
+        }
+        var elem = this[0], name = elem.tagName.toLowerCase();
+        if (elem.outerHTML) {
+            return elem.outerHTML;
+        }
+        var attrs = $.map(elem.attributes, function (i) { return i.name + '="' + i.value + '"'; });
+        return "<" + name + (attrs.length > 0 ? " " + attrs.join(" ") : "") + ">" + elem.innerHTML + "</" + name + ">";
+    };
 })(jQuery);
 
-function setupKoBootstrap (koObject) {
-	// Bind twitter typeahead
-	koObject.bindingHandlers.typeahead = {
-	    init: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
-	        var $element = $(element);
-	        var allBindings = allBindingsAccessor();
-	        var typeaheadArr = koObject.utils.unwrapObservable(valueAccessor());
+function setupKoBootstrap(koObject) {
+    "use strict";
+    // Bind twitter typeahead
+    koObject.bindingHandlers.typeahead = {
+        init: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+            var $element = $(element);
+            var allBindings = allBindingsAccessor();
+            var typeaheadArr = koObject.utils.unwrapObservable(valueAccessor());
 
-	        $element.attr("autocomplete", "off")
+            $element.attr("autocomplete", "off")
 					.typeahead({
-					    'source': typeaheadArr,
-					    'minLength': allBindings.minLength,
-					    'items': allBindings.items,
-					    'updater': allBindings.updater
+						'source': typeaheadArr,
+						'minLength': allBindings.minLength,
+						'items': allBindings.items,
+						'updater': allBindings.updater
 					});
-	    }
-	};
+        }
+    };
 
-	// Bind Twitter Progress
-	koObject.bindingHandlers.progress = {
-		init: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
-			var $element = $(element);
+    // Bind Twitter Progress
+    koObject.bindingHandlers.progress = {
+        init: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+            var $element = $(element);
 
-			var bar = $('<div/>', {
-				'class':'bar',
-				'data-bind':'style: { width:' + valueAccessor() + ' }'
-			});
+            var bar = $('<div/>', {
+                'class': 'bar',
+                'data-bind': 'style: { width:' + valueAccessor() + ' }'
+            });
 
-			$element.attr('id', guid())
+            $element.attr('id', guid())
 				.addClass('progress progress-info')
 				.append(bar);
 
-			koObject.applyBindingsToDescendants(viewModel, $element[0]);
-		}
-	}
+            koObject.applyBindingsToDescendants(viewModel, $element[0]);
+        }
+    };
 
-	// Bind Twitter Alert
-	koObject.bindingHandlers.alert = {
-	    init: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
-	    	var $element = $(element);
-	    	var alertInfo = koObject.utils.unwrapObservable(valueAccessor());
+    // Bind Twitter Alert
+    koObject.bindingHandlers.alert = {
+        init: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+            var $element = $(element);
+            var alertInfo = koObject.utils.unwrapObservable(valueAccessor());
 
-	    	var dismissBtn = $('<button/>', {
-	    		'type':'button',
-	    		'class':'close',
-	    		'data-dismiss':'alert'
-	    	}).html('&times;');
+            var dismissBtn = $('<button/>', {
+                'type': 'button',
+                'class': 'close',
+                'data-dismiss': 'alert'
+            }).html('&times;');
 
-	    	var alertMessage = $('<p/>').html(alertInfo.message);
+            var alertMessage = $('<p/>').html(alertInfo.message);
 
-	    	$element.addClass('alert alert-'+alertInfo.priority)
-	    			.append(dismissBtn)
-	    			.append(alertMessage);
-	    }
-	};
+            $element.addClass('alert alert-' + alertInfo.priority)
+				.append(dismissBtn)
+				.append(alertMessage);
+        }
+    };
 
-	// Bind Twitter Tooltip
-	koObject.bindingHandlers.tooltip = {
-	  update: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
-	    var $element, options, tooltip;
-	    options = koObject.utils.unwrapObservable(valueAccessor());
-	    $element = $(element);
-		
-		// If the title is an observable, make it auto-updating.
-		if (koObject.isObservable(options.title)) {
-			var isToolTipVisible = false;
+    // Bind Twitter Tooltip
+    koObject.bindingHandlers.tooltip = {
+        update: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+            var $element, options, tooltip;
+            options = koObject.utils.unwrapObservable(valueAccessor());
+            $element = $(element);
 
-			$element.on('show.bs.tooltip', function() {
-	    		isToolTipVisible = true;
-			});
-			$element.on('hide.bs.tooltip', function () {
-				isToolTipVisible = false;
-			});
-			
-			// "true" is the bootstrap default.
-			var origAnimation = options.animation || true;
-			options.title.subscribe(function () {
-				if (isToolTipVisible) {
-					$element.data('bs.tooltip').options.animation = false; // temporarily disable animation to avoid flickering of the tooltip
-					$element.tooltip('fixTitle') // call this method to update the title
-							.tooltip('show');
-					$element.data('bs.tooltip').options.animation = origAnimation;
-				}
-			});
-		}
-		
-	    tooltip = $element.data('bs.tooltip');
-	    if (tooltip) {
-	      $.extend(tooltip.options, options);
-	    } else {
-	      $element.tooltip(options);
-	    }
-	  }
-	};
+            // If the title is an observable, make it auto-updating.
+            if (koObject.isObservable(options.title)) {
+                var isToolTipVisible = false;
 
-	// Bind Twitter Popover
-	koObject.bindingHandlers.popover = {
-		init: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
-			// read popover options
-			var popoverBindingValues = koObject.utils.unwrapObservable(valueAccessor());
+                $element.on('show.bs.tooltip', function () {
+                    isToolTipVisible = true;
+                });
+                $element.on('hide.bs.tooltip', function () {
+                    isToolTipVisible = false;
+                });
 
-			// set popover title
-			var popoverTitle = popoverBindingValues.title;
+                // "true" is the bootstrap default.
+                var origAnimation = options.animation || true;
+                options.title.subscribe(function () {
+                    if (isToolTipVisible) {
+                        $element.data('bs.tooltip').options.animation = false; // temporarily disable animation to avoid flickering of the tooltip
+                        $element.tooltip('fixTitle') // call this method to update the title
+                                .tooltip('show');
+                        $element.data('bs.tooltip').options.animation = origAnimation;
+                    }
+                });
+            }
 
-			// set popover template id
-			var tmplId = popoverBindingValues.template;
+            tooltip = $element.data('bs.tooltip');
+            if (tooltip) {
+                $.extend(tooltip.options, options);
+            } else {
+                $element.tooltip(options);
+            }
+        }
+    };
 
-			// set data for template
-	        var data = popoverBindingValues.data;
+    // Bind Twitter Popover
+    koObject.bindingHandlers.popover = {
+        init: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+            // read popover options
+            var popoverBindingValues = koObject.utils.unwrapObservable(valueAccessor());
 
-			// set popover trigger
-			var trigger = 'click';
+            // set popover title
+            var popoverTitle = popoverBindingValues.title;
 
-			if (popoverBindingValues.trigger) {
-				trigger = popoverBindingValues.trigger;
-			}
+            // set popover template id
+            var tmplId = popoverBindingValues.template;
 
-			// update triggers
-			if (trigger === 'hover') {
-	            trigger = 'mouseenter mouseleave';
-	        } else if (trigger === 'focus') {
-	            trigger = 'focus blur';
-	        }
+            // set data for template
+            var data = popoverBindingValues.data;
 
-			// set popover placement
-			var placement = popoverBindingValues.placement;
+            // set popover trigger
+            var trigger = 'click';
 
-			// get template html
-			if (!data) {
-	          var tmplHtml = $('#' + tmplId).html();
-	        } else {
-	          var tmplHtml = function () {
-	            var container = $('<div data-bind="template: { name: template, if: data, data: data }"></div>');
+            if (popoverBindingValues.trigger) {
+                trigger = popoverBindingValues.trigger;
+            }
 
-	            koObject.applyBindings({
-	                template: tmplId,
-	                data: data
-	            }, container[0]);
-	            return container;
-	          };
-	        }
+            // update triggers
+            if (trigger === 'hover') {
+                trigger = 'mouseenter mouseleave';
+            } else if (trigger === 'focus') {
+                trigger = 'focus blur';
+            }
 
-			// create unique identifier to bind to
-			var uuid = guid();
-	        var domId = "ko-bs-popover-" + uuid;
+            // set popover placement
+            var placement = popoverBindingValues.placement;
+            var tmplHtml;
 
-	        // create correct binding context
-	        var childBindingContext = bindingContext.createChildContext(viewModel);
+            // get template html
+            if (!data) {
+                tmplHtml = $('#' + tmplId).html();
+            } else {
+                tmplHtml = function () {
+                    var container = $('<div data-bind="template: { name: template, if: data, data: data }"></div>');
 
-	        // create DOM object to use for popover content
-			var tmplDom = $('<div/>', {
-				"class" : "ko-popover",
-				"id" : domId
-			}).html(tmplHtml);
+                    koObject.applyBindings({
+                        template: tmplId,
+                        data: data
+                    }, container[0]);
+                    return container;
+                };
+            }
 
-			// set content options
-			var options = {
-				content: $(tmplDom[0]).outerHtml(),
-				title: popoverTitle
-			};
+            // create unique identifier to bind to
+            var uuid = guid();
+            var domId = "ko-bs-popover-" + uuid;
 
-			if (placement) {
-				options.placement = placement;
-			}
+            // create correct binding context
+            var childBindingContext = bindingContext.createChildContext(viewModel);
 
-			if (popoverBindingValues.container) {
-				options.container = popoverBindingValues.container;
-			}
+            // create DOM object to use for popover content
+            var tmplDom = $('<div/>', {
+                "class": "ko-popover",
+                "id": domId
+            }).html(tmplHtml);
 
-			// Need to copy this, otherwise all the popups end up with the value of the last item
-	        var popoverOptions = $.extend({}, koObject.bindingHandlers.popover.options, options);
+            // set content options
+            var options = {
+                content: $(tmplDom[0]).outerHtml(),
+                title: popoverTitle
+            };
 
-	        // bind popover to element click
-			$(element).bind(trigger, function () {
-				var popoverAction = 'show';
-				var popoverTriggerEl = $(this);
+            if (placement) {
+                options.placement = placement;
+            }
 
-				// popovers that hover should be toggled on hover
-				// not stay there on mouseout
-				if (trigger !== 'click') {
-					popoverAction = 'toggle';
-				}
+            if (popoverBindingValues.container) {
+                options.container = popoverBindingValues.container;
+            }
 
-				// show/toggle popover
-				popoverTriggerEl.popover(popoverOptions).popover(popoverAction);
+            // Need to copy this, otherwise all the popups end up with the value of the last item
+            var popoverOptions = $.extend({}, koObject.bindingHandlers.popover.options, options);
 
-				// hide other popovers and bind knockout to the popover elements
-				var popoverInnerEl = $('#' + domId);
-				$('.ko-popover').not(popoverInnerEl).parents('.popover').remove();
+            // bind popover to element click
+            $(element).bind(trigger, function () {
+                var popoverAction = 'show';
+                var popoverTriggerEl = $(this);
 
-				// if the popover is visible bind the view model to our dom ID
-				if($('#' + domId).is(':visible')){
+                // popovers that hover should be toggled on hover
+                // not stay there on mouseout
+                if (trigger !== 'click') {
+                    popoverAction = 'toggle';
+                }
 
-	                /* Since bootstrap calculates popover position before template is filled,
-	                 * a smaller popover height is used and it appears moved down relative to the trigger element.
-	                 * So we have to fix the position after the bind
-	                 */
+                // show/toggle popover
+                popoverTriggerEl.popover(popoverOptions).popover(popoverAction);
 
-	                var triggerElementPosition = $(element).offset().top;
-	                var triggerElementLeft = $(element).offset().left;
-	                var triggerElementHeight = $(element).outerHeight();
-	                var triggerElementWidth = $(element).outerWidth();
+                // hide other popovers and bind knockout to the popover elements
+                var popoverInnerEl = $('#' + domId);
+                $('.ko-popover').not(popoverInnerEl).parents('.popover').remove();
 
-	                var popover = $(popoverInnerEl).parents('.popover');
-	                var popoverHeight = popover.outerHeight();
-	                var popoverWidth = popover.outerWidth();
-	                var arrowSize = 10;
+                // if the popover is visible bind the view model to our dom ID
+                if ($('#' + domId).is(':visible')) {
 
-	                switch (popoverOptions.placement) {
-	                    case 'left':
-							popover.offset({ top: triggerElementPosition - popoverHeight / 2 + triggerElementHeight / 2, left: triggerElementLeft - arrowSize - popoverWidth });
-							break;
-	                    case 'right':
-	                        popover.offset({ top: triggerElementPosition - popoverHeight / 2 + triggerElementHeight / 2 });
-	                        break;
-	                    case 'top':
-	                        popover.offset({ top: triggerElementPosition - popoverHeight - arrowSize, left: triggerElementLeft - popoverWidth / 2 + triggerElementWidth / 2 });
-	                        break;
-	                    case 'bottom':
-	                        popover.offset({ top: triggerElementPosition + triggerElementHeight + arrowSize, left: triggerElementLeft - popoverWidth / 2 + triggerElementWidth / 2});
-	                }
-	            }
+                    /* Since bootstrap calculates popover position before template is filled,
+                     * a smaller popover height is used and it appears moved down relative to the trigger element.
+                     * So we have to fix the position after the bind
+                    */
+
+                    var triggerElementPosition = $(element).offset().top;
+                    var triggerElementLeft = $(element).offset().left;
+                    var triggerElementHeight = $(element).outerHeight();
+                    var triggerElementWidth = $(element).outerWidth();
+
+                    var popover = $(popoverInnerEl).parents('.popover');
+                    var popoverHeight = popover.outerHeight();
+                    var popoverWidth = popover.outerWidth();
+                    var arrowSize = 10;
+
+                    switch (popoverOptions.placement) {
+                        case 'left':
+                            popover.offset({ top: triggerElementPosition - popoverHeight / 2 + triggerElementHeight / 2, left: triggerElementLeft - arrowSize - popoverWidth });
+                            break;
+                        case 'right':
+                            popover.offset({ top: triggerElementPosition - popoverHeight / 2 + triggerElementHeight / 2 });
+                            break;
+                        case 'top':
+                            popover.offset({ top: triggerElementPosition - popoverHeight - arrowSize, left: triggerElementLeft - popoverWidth / 2 + triggerElementWidth / 2 });
+                            break;
+                        case 'bottom':
+                            popover.offset({ top: triggerElementPosition + triggerElementHeight + arrowSize, left: triggerElementLeft - popoverWidth / 2 + triggerElementWidth / 2 });
+                    }
+                }
 
 
-	            // bind close button to remove popover
-	            $(document).on('click', '[data-dismiss="popover"]', function (e) {
-	                popoverTriggerEl.popover('hide');
-	            });
-			});
-		},
-		options: {
-			placement: "right",
-			title: "",
-			html: true,
-			content: "",
-			trigger: "manual"
-		}
-	};
+                // bind close button to remove popover
+                $(document).on('click', '[data-dismiss="popover"]', function (e) {
+                    popoverTriggerEl.popover('hide');
+                });
+            });
+        },
+        options: {
+            placement: "right",
+            title: "",
+            html: true,
+            content: "",
+            trigger: "manual"
+        }
+    };
 }
 
-(function(factory) {
+(function (factory) {
+	"use strict";
     // Support multiple loading scenarios
-    if (typeof define === 'function' && define['amd']) {
+    if (typeof define === 'function' && define.amd) {
         // AMD anonymous module
 
-        define(["require", "exports", "knockout"], function(require, exports, knockout) {
-        	factory(knockout);
+        define(["require", "exports", "knockout"], function (require, exports, knockout) {
+            factory(knockout);
         });
     } else {
         // No module loader (plain <script> tag) - put directly in global namespace
-        factory(window['ko']);
+        factory(window.ko);
     }
-}(setupKoBootstrap))
+}(setupKoBootstrap));

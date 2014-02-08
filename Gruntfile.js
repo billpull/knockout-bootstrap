@@ -19,7 +19,7 @@ module.exports = function(grunt) {
         reporter: "checkstyle",
         reporterOutput: "jshint.xml"
       },
-      all: ['src/**'],
+      all: ['src/knockout-bootstrap.js'],
     }
   });
 
