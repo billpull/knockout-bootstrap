@@ -3,6 +3,9 @@
   "version": "0.2.1",
   "description": "Knockout Bindings for Bootstrap Widgets",
   "main": "src/knockout-bootstrap.js",
+  "scripts": {
+    "test": "grunt tests"
+  },
   "directories": {
     "example": "examples"
   },
@@ -26,7 +29,8 @@
   "devDependencies": {
     "grunt": "*",
     "grunt-cli": "*",
-    "grunt-contrib-uglify": "*"
+    "grunt-contrib-uglify": "*",
+    "grunt-contrib-jshint": "*"
   },
   "author": "Bill Pullen",
   "license": "MIT",
