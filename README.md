@@ -1,6 +1,8 @@
 knockout-bootstrap
 ==================
 
+[![Build Status](https://travis-ci.org/billpull/knockout-bootstrap.png?branch=master)](https://travis-ci.org/billpull/knockout-bootstrap)
+
 #### Requires
 - knockout
 - jQuery ( no minimum version identified yet )
