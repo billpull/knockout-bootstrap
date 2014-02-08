@@ -1,0 +1,20 @@
+{
+	"noempty": "true",
+	"bitwise": "true",
+	"immed": "true",
+	"curly": "true",
+	"eqeqeq": "true",
+	"forin": "true",
+	"latedef": "true",
+	"newcap": "true",
+	"nonew": "true",
+	"noarg": "true",
+	"strict": "true",
+	"trailing": "true",
+	"undef": "true",
+	"browser": "true",
+	"jquery": "true",
+	"devel": "true",
+	"camelcase": "true",
+	"global": ["define"]
+}

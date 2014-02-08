@@ -1,5 +1,3 @@
-/*global: define */
-
 //UUID
 function s4() {
     "use strict";
