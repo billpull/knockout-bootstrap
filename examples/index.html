@@ -13,8 +13,7 @@
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
         <link rel="stylesheet" href="css/bootstrap.min.css" />
-        <link rel="stylesheet" href="css/bootstrap-responsive.min.css" />
-        <link rel="stylesheet" href="css/docs.css" />
+        <link rel="stylesheet" href="css/docs.min.css" />
         <link rel="stylesheet" href="css/prettify.css" />
     </head>
     <body data-spy="scroll" data-target=".bs-docs-sidebar" data-twttr-rendered="true">
@@ -50,7 +49,7 @@
         </header>
 
         <!-- Add your site or application content here -->
-        <div class="container">
+        <div class="container" id="container">
             <div class="row">
                 <div class="span3 bs-docs-sidebar">
                     <ul class="nav nav-list bs-docs-sidenav">
@@ -422,6 +421,26 @@ var ViewModel = function() {
         <a href="https://github.com/billpull/knockout-bootstrap"><img style="position: absolute; top: 0; right: 0; border: 0;z-index:10001" src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png" alt="Fork me on GitHub"></a>
         
 
+        <script type="text/html" id="popoverTemplate">
+            <button class="close pull-right" type="button" data-dismiss="popover">&times</button>
+            Hey I am some content in A popover
+        </script>
+
+        <script type="text/html" id="popoverBindingTemplate">
+            <button class="close pull-right" type="button" data-dismiss="popover">&times</button>
+            <form>
+                <label>Popover Binding Header</label>
+                <input type="text" data-bind="value: popoverBindingHeader, valueUpdate:'afterkeydown' " />
+                <strong>Foreach binding:</strong>
+                <table class="table table-striped">
+                      <tbody data-bind="foreach: colors">
+                        <tr><td><span data-bind="text: $data"></span></td></tr>
+                      </tbody>
+                </table>
+            </form>
+        </script>
+        
+
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/knockout.js"></script>
@@ -433,7 +452,7 @@ var ViewModel = function() {
 
                 self.popoverBindingHeader = ko.observable('Binding in A Popover');
                 self.alerts = ko.observableArray([
-                        {'message': 'Here is an Error', 'priority': 'error'},
+                        {'message': 'Here is an Error', 'priority': 'danger'},
                         {'message': 'Here is a Warning', 'priority': 'warning'},
                         {'message': 'Here is a Success', 'priority': 'success'},
                         {'message': 'Here is some Info', 'priority': 'info'}
@@ -479,33 +498,12 @@ var ViewModel = function() {
                 };
             };
 
-            $(function(){
                 // make code pretty
                 window.prettyPrint && prettyPrint();
 
                 var viewModel = new ExampleViewModel();
 
-                ko.applyBindings(viewModel);
-            });
-        </script>
-
-        <script type="text/html" id="popoverTemplate">
-            <button class="close pull-right" type="button" data-dismiss="popover">&times</button>
-            Hey I am some content in A popover
-        </script>
-
-        <script type="text/html" id="popoverBindingTemplate">
-            <button class="close pull-right" type="button" data-dismiss="popover">&times</button>
-            <form>
-                <label>Popover Binding Header</label>
-                <input type="text" data-bind="value: popoverBindingHeader, valueUpdate:'afterkeydown' " />
-                <strong>Foreach binding:</strong>
-                <table class="table table-striped">
-                      <tbody data-bind="foreach: colors">
-                        <tr><td><span data-bind="text: $data"></span></td></tr>
-                      </tbody>
-                </table>
-            </form>
+                ko.applyBindings(viewModel, document.getElementById('container'));
         </script>
     </body>
 </html>

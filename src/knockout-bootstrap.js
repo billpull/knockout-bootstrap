@@ -60,6 +60,7 @@ function setupKoBootstrap(koObject) {
 				.addClass('progress progress-info')
 				.append(bar);
 
+            koObject.cleanNode($element[0]);
             koObject.applyBindingsToDescendants(viewModel, $element[0]);
         }
     };
@@ -156,12 +157,17 @@ function setupKoBootstrap(koObject) {
             var placement = popoverBindingValues.placement;
             var tmplHtml;
 
+            console.log(tmplId)
+            console.log( $('#' + tmplId).html())
+
             // get template html
             if (!data) {
                 tmplHtml = $('#' + tmplId).html();
             } else {
                 tmplHtml = function () {
                     var container = $('<div data-bind="template: { name: template, if: data, data: data }"></div>');
+
+                    koObject.cleanNode(container);
 
                     koObject.applyBindings({
                         template: tmplId,
