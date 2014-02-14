@@ -34,15 +34,15 @@ function setupKoBootstrap(koObject) {
         init: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
             var $element = $(element);
             var allBindings = allBindingsAccessor();
-            var typeaheadArr = koObject.utils.unwrapObservable(valueAccessor());
+            var typeaheadOpts = { source: koObject.utils.unwrapObservable(valueAccessor()) };
 
-            $element.attr("autocomplete", "off")
-					.typeahead({
-						'source': typeaheadArr,
-						'minLength': allBindings.minLength,
-						'items': allBindings.items,
-						'updater': allBindings.updater
-					});
+            if (allBindings.typeaheadOptions) {
+                $.each(allBindings.typeaheadOptions, function(optionName, optionValue) {
+                    typeaheadOpts[optionName] = koObject.utils.unwrapObservable(optionValue);
+                });
+            }
+
+            $element.attr("autocomplete", "off").typeahead(typeaheadOpts);
         }
     };
 
