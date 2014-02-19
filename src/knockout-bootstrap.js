@@ -140,6 +140,9 @@ function setupKoBootstrap(koObject) {
 
             // set popover trigger
             var trigger = 'click';
+			
+			// set event type for binding bind
+			var eventType = 'click';
 
             if (popoverBindingValues.trigger) {
                 trigger = popoverBindingValues.trigger;
@@ -147,9 +150,9 @@ function setupKoBootstrap(koObject) {
 
             // update triggers
             if (trigger === 'hover') {
-                trigger = 'mouseenter mouseleave';
+                eventType = 'mouseenter mouseleave';
             } else if (trigger === 'focus') {
-                trigger = 'focus blur';
+                eventType = 'focus blur';
             }
 
             // set popover placement
@@ -202,7 +205,7 @@ function setupKoBootstrap(koObject) {
             var popoverOptions = $.extend({}, koObject.bindingHandlers.popover.options, options);
 
             // bind popover to element click
-            $(element).bind(trigger, function () {
+            $(element).bind(eventType, function () {
                 var popoverAction = 'show';
                 var popoverTriggerEl = $(this);
 
