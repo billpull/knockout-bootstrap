@@ -21,37 +21,36 @@
             <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
         <![endif]-->
 
-        <div class="navbar navbar-inverse navbar-fixed-top">
-          <div class="navbar-inner">
-            <div class="container">
-              <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <div class="navbar navbar-fixed-top navbar-inverse" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
-              <a class="brand" href="./index.html">Knockout-Bootstrap</a>
-              <div class="nav-collapse collapse">
-                <ul class="nav">
-                  <li class="">
-                    <a href="./index.html">Home</a>
-                  </li>
-                </ul>
-              </div>
+              <a class="navbar-brand" href="./index.html">Knockout-Bootstrap</a>
             </div>
-          </div>
-        </div>
+            <div class="collapse navbar-collapse">
+              <ul class="nav navbar-nav">
+                <li class="active"><a href="./index.html">Home</a></li>
+              </ul>
+            </div><!-- /.nav-collapse -->
+          </div><!-- /.container -->
+        </div><!-- /.navbar -->
 
-        <header class="jumbotron subhead">
-          <div class="container">
-            <h1>Knockout-Bootstrap</h1>
-            <p class="lead">Create rich two way interactions with Boostrap and Knockout bindings
-          </p></div>
-        </header>
+        <div class="container">
 
-        <!-- Add your site or application content here -->
-        <div class="container" id="container">
+          <header class="jumbotron subhead">
+            <div class="container">
+              <h1>Knockout-Bootstrap</h1>
+              <p class="lead">Create rich two way interactions with Boostrap and Knockout bindings
+            </p></div>
+          </header>
+
             <div class="row">
-                <div class="span3 bs-docs-sidebar">
+                <div class="col-sm-3 bs-docs-sidebar">
                     <ul class="nav nav-list bs-docs-sidenav">
                         <li class=""><a href="#overview"><i class="icon-chevron-right"></i> Overview</a></li>
                         <li class=""><a href="#tooltip"><i class="icon-chevron-right"></i> Tooltip</a></li>
@@ -61,7 +60,7 @@
                         <li class=""><a href="#typeahead"><i class="icon-chevron-right"></i> Typeahead</a></li>
                     </ul>
                 </div>
-                <div class="span9">
+                <div class="col-sm-9">
                     <section id="overview">
                         <div class="page-header">
                             <h1>Knockout-bootstrap Overview</h1>
@@ -88,11 +87,11 @@
                             <h1>Tooltips</h1>
                         </div>
                         <h2>Examples</h2>
-                        <div class="bs-docs-example">
+                        <div class="bs-example">
                             <p class="muted" style="margin-bottom: 0;">Tight pants next level keffiyeh <a href="#" data-bind="tooltip: {title: 'Default tooltip'}">you probably</a> haven't heard of them. Photo booth beard raw denim letterpress vegan messenger bag stumptown. Farm-to-table seitan, mcsweeney's fixie sustainable quinoa 8-bit american apparel <a href="#" data-bind="tooltip: {title: 'Another tooltip', placement: 'right'}">have a</a> terry richardson vinyl chambray. Beard stumptown, cardigans banh mi lomo thundercats. Tofu biodiesel williamsburg marfa, four loko mcsweeney's cleanse vegan chambray.
                             </p>
                         </div>
-<pre class="prettyprint linenums">
+<pre class="prettyprint linenums highlight">
 &lt;a href="#" data-bind="tooltip: {title: 'Default tooltip'}"&gt;you probably&lt;/a&gt;
 &lt;a href="#" data-bind="tooltip: {title: 'Another tooltip', placement: 'right'}"&gt;have a&lt;/a&gt;
 </pre>
@@ -137,14 +136,14 @@
                         <p>
                             Takes text content from a template and puts it in a popover
                         </p>
-                        <div class="bs-docs-example">
+                        <div class="bs-example">
                             <button class="btn btn-large btn-primary" data-bind="popover: {template: 'popoverTemplate', title: 'Oh Yea'}">Launch Simple Popover</button>
 
                             <button class="btn btn-large btn-primary" data-bind="popover: {template: 'popoverTemplate', title: 'Oh Yea', trigger: 'hover'}">Hover Simple Popover</button>
 
                             <button class="btn btn-large btn-primary" data-bind="popover: {template: 'popoverTemplate', title: 'Oh Yea', trigger: 'focus'}">Focus Simple Popover</button>
                         </div>
-<pre class="prettyprint linenums">
+<pre class="prettyprint linenums highlight">
 &lt;button class="btn" data-bind="popover: {template: 'popoverTemplate', title: 'Oh Yea'}"&gt;
     Launch Simple Popover
 &lt;/button&gt;
@@ -158,11 +157,11 @@
                         <p>
                             Manipulate data from within a popover
                         </p>
-                        <div class="bs-docs-example">
+                        <div class="bs-example">
                             <h1 data-bind="text: popoverBindingHeader"></h1>
                             <button class="btn btn-large btn-primary" data-bind="popover: {template: 'popoverBindingTemplate', placement: 'right', title: 'Oh Yea Binding'}">Launch Binding Popover</button>
                         </div>
-<pre class="prettyprint linenums">
+<pre class="prettyprint linenums highlight">
 &lt;h1 data-bind="text: popoverBindingHeader"&gt;&lt;/h1&gt;
 &lt;button class="btn" data-bind="popover: {template: 'popoverBindingTemplate', title: 'Oh Yea Binding'}"&gt;
     Launch Binding Popover
@@ -225,12 +224,12 @@
                             <h1>Alerts</h1>
                         </div>
                         <h2>Examples</h2>
-                        <div class="bs-docs-example">
+                        <div class="bs-example">
                             <div data-bind="foreach: alerts">
                                 <div data-bind="alert: $data"></div>
                             </div>
                         </div>
-<pre class="prettyprint linenums">
+<pre class="prettyprint linenums highlight">
 &lt;!-- View Code --&gt;
 &lt;div data-bind="foreach: alerts"&gt;
     &lt;div data-bind="alert: $data">&lt;/div&gt;
@@ -282,14 +281,14 @@ var ViewModel = function() {
                             <h1>Progress Bar</h1>
                         </div>
                         <h2>Examples</h2>
-                        <div class="bs-docs-example">
+                        <div class="bs-example">
                             <form>
                                 <label>Update Progress Value Observable</label>
-                                <input type="text" data-bind="value: progressVal, valueUpdate:'afterkeydown'" />
+                                <input type="text" class="form-control" data-bind="value: progressVal, valueUpdate:'afterkeydown'" />
                             </form>
                             <div data-bind="progress: 'progressWidth'"></div>
                         </div>
-<pre class="prettyprint linenums">
+<pre class="prettyprint linenums highlight">
 &lt;!-- View Code --&gt;
 &lt;form&gt;
     &lt;label&gt;Update Progress Value Observable&lt;/label&gt;
@@ -339,22 +338,22 @@ var ViewModel = function() {
                             to the <code>data-bind="typeahead:"</code> binding and the items from that observable
                             array will be shown as suggestions in the input box. To show the binding nature of this
                             feature the example allows you to add and remove items from the array.
-                         <div class="bs-docs-example">
+                         <div class="bs-example">
                             <div class="row">
-                                <div class="span4">
+                                <div class="col-sm-4">
                                     <form>
                                         <label>Javascript Frameworks</label>
-                                        <input type="text" data-bind="typeahead: jsFrameworks" />
+                                        <input type="text" class="form-control" data-bind="typeahead: jsFrameworks" />
                                     </form>
                                     <form data-bind="submit: addFramework">
                                         <label>Add a framework</label>
-                                        <input type="text" data-bind="value: frameworkToAdd, valueUpdate:'afterkeydown'" />
+                                        <input type="text" class="form-control" data-bind="value: frameworkToAdd, valueUpdate:'afterkeydown'" />
                                         <div class="form-actions">
                                             <button class="btn" type="submit" data-bind="enable: frameworkToAdd().length > 0">Add</button>
                                         </div>
                                     </form>
                                 </div>
-                                <div class="well span4">
+                                <div class="well col-sm-4">
                                     <ul class="nav nav-list" data-bind="foreach: jsFrameworks">
                                         <li>
                                             <span data-bind="text: $data"></span>
@@ -364,7 +363,7 @@ var ViewModel = function() {
                                 </div>
                             </div>
                         </div>
-<pre class="prettyprint linenums">
+<pre class="prettyprint linenums highlight">
 &lt;!-- View Code --&gt;
 &lt;div class="row"&gt;
     &lt;div class="span4"&gt;
@@ -430,7 +429,7 @@ var ViewModel = function() {
             <button class="close pull-right" type="button" data-dismiss="popover">&times</button>
             <form>
                 <label>Popover Binding Header</label>
-                <input type="text" data-bind="value: popoverBindingHeader, valueUpdate:'afterkeydown' " />
+                <input type="text" class="form-control" data-bind="value: popoverBindingHeader, valueUpdate:'afterkeydown' " />
                 <strong>Foreach binding:</strong>
                 <table class="table table-striped">
                       <tbody data-bind="foreach: colors">
