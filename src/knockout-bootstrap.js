@@ -34,15 +34,15 @@ function setupKoBootstrap(koObject) {
         init: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
             var $element = $(element);
             var allBindings = allBindingsAccessor();
-            var typeaheadArr = koObject.utils.unwrapObservable(valueAccessor());
+            var typeaheadOpts = { source: koObject.utils.unwrapObservable(valueAccessor()) };
 
-            $element.attr("autocomplete", "off")
-					.typeahead({
-						'source': typeaheadArr,
-						'minLength': allBindings.minLength,
-						'items': allBindings.items,
-						'updater': allBindings.updater
-					});
+            if (allBindings.typeaheadOptions) {
+                $.each(allBindings.typeaheadOptions, function(optionName, optionValue) {
+                    typeaheadOpts[optionName] = koObject.utils.unwrapObservable(optionValue);
+                });
+            }
+
+            $element.attr("autocomplete", "off").typeahead(typeaheadOpts);
         }
     };
 
@@ -141,6 +141,9 @@ function setupKoBootstrap(koObject) {
 
             // set popover trigger
             var trigger = 'click';
+			
+			// set event type for binding bind
+			var eventType = 'click';
 
             if (popoverBindingValues.trigger) {
                 trigger = popoverBindingValues.trigger;
@@ -148,9 +151,9 @@ function setupKoBootstrap(koObject) {
 
             // update triggers
             if (trigger === 'hover') {
-                trigger = 'mouseenter mouseleave';
+                eventType = 'mouseenter mouseleave';
             } else if (trigger === 'focus') {
-                trigger = 'focus blur';
+                eventType = 'focus blur';
             }
 
             // set popover placement
@@ -208,7 +211,7 @@ function setupKoBootstrap(koObject) {
             var popoverOptions = $.extend({}, koObject.bindingHandlers.popover.options, options);
 
             // bind popover to element click
-            $(element).bind(trigger, function () {
+            $(element).bind(eventType, function () {
                 var popoverAction = 'show';
                 var popoverTriggerEl = $(this);
 
