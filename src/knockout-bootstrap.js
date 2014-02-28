@@ -223,7 +223,9 @@ function setupKoBootstrap(koObject) {
                 $('.ko-popover').not(popoverInnerEl).parents('.popover').remove();
 
                 // if the popover is visible bind the view model to our dom ID
-                if ($('#' + domId).is(':visible')) {
+                if (popoverInnerEl.is(':visible')) {
+
+                    ko.applyBindingsToDescendants(childBindingContext, popoverInnerEl[0]);
 
                     /* Since bootstrap calculates popover position before template is filled,
                      * a smaller popover height is used and it appears moved down relative to the trigger element.
@@ -260,6 +262,9 @@ function setupKoBootstrap(koObject) {
                 $(document).on('click', '[data-dismiss="popover"]', function (e) {
                     popoverTriggerEl.popover('hide');
                 });
+
+                // Also tell KO *not* to bind the descendants itself, otherwise they will be bound twice
+                return { controlsDescendantBindings: true };
             });
         },
         options: {
