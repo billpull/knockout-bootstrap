@@ -225,7 +225,7 @@ function setupKoBootstrap(koObject) {
                 // if the popover is visible bind the view model to our dom ID
                 if (popoverInnerEl.is(':visible')) {
 
-                    ko.applyBindingsToDescendants(childBindingContext, popoverInnerEl[0]);
+                    koObject.applyBindingsToDescendants(childBindingContext, popoverInnerEl[0]);
 
                     /* Since bootstrap calculates popover position before template is filled,
                      * a smaller popover height is used and it appears moved down relative to the trigger element.
