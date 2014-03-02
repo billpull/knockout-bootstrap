@@ -27,7 +27,15 @@
     "grunt": "*",
     "grunt-cli": "*",
     "grunt-contrib-uglify": "*",
-    "grunt-contrib-jshint": "*"
+    "grunt-contrib-jshint": "*",
+    "gulp": "^3.5.5",
+    "gulp-cached": "0.0.2",
+    "gulp-changed": "^0.2.1",
+    "gulp-uglify": "^0.2.1",
+    "gulp-concat": "^2.1.7",
+    "gulp-header": "^1.0.2",
+    "gulp-util": "^2.2.14",
+    "gulp-jshint": "^1.5.0"
   },
   "author": "Bill Pullen",
   "license": "MIT",
