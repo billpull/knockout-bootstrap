@@ -16,5 +16,7 @@
 	"jquery": "true",
 	"devel": "true",
 	"camelcase": "true",
-	"global": ["define"]
+	"globals": {
+        "define": true
+    }
 }
