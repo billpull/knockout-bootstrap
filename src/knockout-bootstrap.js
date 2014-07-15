@@ -131,7 +131,7 @@ function setupKoBootstrap(koObject) {
             var $element = $(element);
 
             // read popover options
-            var popoverBindingValues = ko.utils.unwrapObservable(valueAccessor());
+            var popoverBindingValues = koObject.utils.unwrapObservable(valueAccessor());
 
             // build up all the options
             var tmpOptions = {};
@@ -141,7 +141,7 @@ function setupKoBootstrap(koObject) {
                 tmpOptions.title = popoverBindingValues.title;
             }else{
                 //if title is empty, then fix template
-                tmpOptions.template = '<div class="popover" role="tooltip"><div class="arrow"></div><div class="popover-content"></div></div>'
+                tmpOptions.template = '<div class="popover" role="tooltip"><div class="arrow"></div><div class="popover-content"></div></div>';
             }
 
             // set popover placement
@@ -180,7 +180,7 @@ function setupKoBootstrap(koObject) {
                     tmplHtml = function() {
                         var container = $('<div data-bind="template: { name: template, if: data, data: data }"></div>');
 
-                        ko.applyBindings({
+                        koObject.applyBindings({
                             template: tmplId,
                             data: data
                         }, container[0]);
@@ -214,7 +214,7 @@ function setupKoBootstrap(koObject) {
             tmpOptions.content = $(tmplDom[0]).outerHtml();
 
             // Need to copy this, otherwise all the popups end up with the value of the last item
-            var popoverOptions = $.extend({}, ko.bindingHandlers.popover.options, tmpOptions);
+            var popoverOptions = $.extend({}, koObject.bindingHandlers.popover.options, tmpOptions);
 
             // see if the close button should be added to the title
             if (popoverOptions.addCloseButtonToTitle) {
@@ -257,13 +257,25 @@ function setupKoBootstrap(koObject) {
                 eventType = 'click';
             }
 
+            var lastEventType = "";
             // bind popover to element click
-            $element.bind(eventType, function(e) {
+            $element.on(eventType, function(e) {
+                e.stopPropagation();
+
                 var popoverAction = 'toggle';
                 var popoverTriggerEl = $(this);
 
                 // Check state before we toggle it so the animation gives us the correct state
                 var popoverPrevStateVisible = $('#' + domId).is(':visible');
+
+                // if set eventType to "click focus", then both events were fired in chrome,
+                // in safari only click was fired, and focus/blur will be missed for a lot of tags.
+                if(lastEventType === 'focus' && e.type === 'click' && popoverPrevStateVisible ){
+                    lastEventType = e.type;
+                    return;
+                }
+                lastEventType = e.type;
+
 
                 // show/toggle popover
                 popoverTriggerEl.popover(popoverOptions).popover(popoverAction);
@@ -298,7 +310,7 @@ function setupKoBootstrap(koObject) {
                 // if the popover was visible, it should now be hidden, so bind the view model to our dom ID
                 if (!popoverPrevStateVisible) {
 
-                    ko.applyBindingsToDescendants(childBindingContext, popoverInnerEl[0]);
+                    koObject.applyBindingsToDescendants(childBindingContext, popoverInnerEl[0]);
 
                     /* Since bootstrap calculates popover position before template is filled,
                      * a smaller popover height is used and it appears moved down relative to the trigger element.
@@ -341,7 +353,6 @@ function setupKoBootstrap(koObject) {
                     });
                 }
 
-                e.stopPropagation();
 
                 // Also tell KO *not* to bind the descendants itself, otherwise they will be bound twice
                 return { controlsDescendantBindings: true };
