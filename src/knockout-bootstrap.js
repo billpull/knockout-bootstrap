@@ -329,16 +329,16 @@ function setupKoBootstrap(koObject) {
 
                     switch (popoverOptions.offset && popoverOptions.placement) {
                         case 'left':
-                            popover.offset({ top: triggerElementPosition - popoverHeight / 2 + triggerElementHeight / 2, left: triggerElementLeft - arrowSize - popoverWidth });
+                            popover.offset({ top: Math.max(0, triggerElementPosition - popoverHeight / 2 + triggerElementHeight / 2), left: Math.max(0, triggerElementLeft - arrowSize - popoverWidth) });
                             break;
                         case 'right':
-                            popover.offset({ top: triggerElementPosition - popoverHeight / 2 + triggerElementHeight / 2 });
+                            popover.offset({ top: Math.max(0, triggerElementPosition - popoverHeight / 2 + triggerElementHeight / 2) });
                             break;
                         case 'top':
-                            popover.offset({ top: triggerElementPosition - popoverHeight - arrowSize, left: triggerElementLeft - popoverWidth / 2 + triggerElementWidth / 2 });
+                            popover.offset({ top: Math.max(0, triggerElementPosition - popoverHeight - arrowSize), left: Math.max(0, triggerElementLeft - popoverWidth / 2 + triggerElementWidth / 2) });
                             break;
                         case 'bottom':
-                            popover.offset({ top: triggerElementPosition + triggerElementHeight + arrowSize, left: triggerElementLeft - popoverWidth / 2 + triggerElementWidth / 2 });
+                            popover.offset({ top: Math.max(0, triggerElementPosition + triggerElementHeight + arrowSize), left: Math.max(0, triggerElementLeft - popoverWidth / 2 + triggerElementWidth / 2) });
                     }
 
                     // bind close button to remove popover
