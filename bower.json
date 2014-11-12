@@ -1,6 +1,6 @@
 {
-  "name": "bootstrap",
-  "version": "0.2.1",
+  "name": "knockout-bootstrap",
+  "version": "0.2.2",
   "main": [
     "./build/knockout-bootstrap.min.js"
   ],
