@@ -1,35 +1,34 @@
-
-//UUID
-function s4() {
+/* global define */
+function setupKoBootstrap(koObject, $) {
     "use strict";
-    return Math.floor((1 + Math.random()) * 0x10000)
-        .toString(16)
-        .substring(1);
-}
+    //UUID. note: not RFC4122-compliant.
+    var guid = (function(s4) {
+        return function() {
+            return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
+        };
+    })(function() {
+        return Math.floor((1 + Math.random()) * 0x10000)
+            .toString(16)
+            .substring(1);
+    });
 
-function guid() {
-    "use strict";
-    return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
-}
+    // Outer HTML
+    if (!$.fn.outerHtml) {
+        $.fn.outerHtml = function () {
+            if (this.length === 0) {
+                return false;
+            }
+            var elem = this[0], name = elem.tagName.toLowerCase();
+            if (elem.outerHTML) {
+                return elem.outerHTML;
+            }
+            var attrs = $.map(elem.attributes, function (i) {
+                return i.name + '="' + i.value + '"';
+            });
+            return "<" + name + (attrs.length > 0 ? " " + attrs.join(" ") : "") + ">" + elem.innerHTML + "</" + name + ">";
+        };
+    }
 
-// Outer HTML
-(function ($) {
-    "use strict";
-    $.fn.outerHtml = function () {
-        if (this.length === 0) {
-            return false;
-        }
-        var elem = this[0], name = elem.tagName.toLowerCase();
-        if (elem.outerHTML) {
-            return elem.outerHTML;
-        }
-        var attrs = $.map(elem.attributes, function (i) { return i.name + '="' + i.value + '"'; });
-        return "<" + name + (attrs.length > 0 ? " " + attrs.join(" ") : "") + ">" + elem.innerHTML + "</" + name + ">";
-    };
-})(jQuery);
-
-function setupKoBootstrap(koObject) {
-    "use strict";
     // Bind twitter typeahead
     koObject.bindingHandlers.typeahead = {
         init: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
@@ -374,11 +373,11 @@ function setupKoBootstrap(koObject) {
     if (typeof define === 'function' && define.amd) {
         // AMD anonymous module
 
-        define(["require", "exports", "knockout"], function (require, exports, knockout) {
-            factory(knockout);
+        define(["require", "exports", "knockout", "jquery"], function (require, exports, knockout, jQuery) {
+            factory(knockout, jQuery);
         });
     } else {
         // No module loader (plain <script> tag) - put directly in global namespace
-        factory(window.ko);
+        factory(window.ko, jQuery);
     }
 }(setupKoBootstrap));
