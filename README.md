@@ -4,9 +4,9 @@ knockout-bootstrap
 [![Build Status](https://travis-ci.org/billpull/knockout-bootstrap.png?branch=master)](https://travis-ci.org/billpull/knockout-bootstrap)
 
 #### Requires
-- knockout
+- knockout >= 3.1.0
 - jQuery ( no minimum version identified yet )
-- bootstrap 
+- bootstrap >= 2.1.1
 
 A plugin that adds custom bindings for twitter bootstrap plugins such as tooltips and popovers.
 
