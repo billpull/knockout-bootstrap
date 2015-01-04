@@ -12,8 +12,7 @@
 
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
-        <link rel="stylesheet" href="css/bootstrap.min.css" />
-        <link rel="stylesheet" href="css/bootstrap-responsive.min.css" />
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" />
         <link rel="stylesheet" href="css/docs.css" />
         <link rel="stylesheet" href="css/prettify.css" />
     </head>
@@ -25,15 +24,18 @@
         <div class="navbar navbar-inverse navbar-fixed-top">
           <div class="navbar-inner">
             <div class="container">
-              <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-              </button>
-              <a class="brand" href="./index.html">Knockout-Bootstrap</a>
-              <div class="nav-collapse collapse">
-                <ul class="nav">
-                  <li class="">
+              <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+              </div>
+              <a class="navbar-brand" href="./index.html">Knockout-Bootstrap</a>
+              <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                  <li>
                     <a href="./index.html">Home</a>
                   </li>
                 </ul>
@@ -45,24 +47,25 @@
         <header class="jumbotron subhead">
           <div class="container">
             <h1>Knockout-Bootstrap</h1>
-            <p class="lead">Create rich two way interactions with Boostrap and Knockout bindings
+            <p class="lead">Create rich two way interactions with Bootstrap and Knockout bindings
           </p></div>
         </header>
 
         <!-- Add your site or application content here -->
         <div class="container">
             <div class="row">
-                <div class="span3 bs-docs-sidebar">
+                <div class="col-md-3 bs-docs-sidebar">
                     <ul class="nav nav-list bs-docs-sidenav">
-                        <li class=""><a href="#overview"><i class="icon-chevron-right"></i> Overview</a></li>
-                        <li class=""><a href="#tooltip"><i class="icon-chevron-right"></i> Tooltip</a></li>
-                        <li class=""><a href="#popover"><i class="icon-chevron-right"></i> Popover</a></li>
-                        <li class=""><a href="#alert"><i class="icon-chevron-right"></i> Alert</a></li>
-                        <li class=""><a href="#progress"><i class="icon-chevron-right"></i> Progress Bar</a></li>
-                        <li class=""><a href="#typeahead"><i class="icon-chevron-right"></i> Typeahead</a></li>
+                        <li class="active"><a href="#overview"><i class="glyphicon glyphicon-chevron-right"></i> Overview</a></li>
+                        <li class=""><a href="#tooltip"><i class="glyphicon glyphicon-chevron-right"></i> Tooltip</a></li>
+                        <li class=""><a href="#popover"><i class="glyphicon glyphicon-chevron-right"></i> Popover</a></li>
+                        <li class=""><a href="#alert"><i class="glyphicon glyphicon-chevron-right"></i> Alert</a></li>
+                        <li class=""><a href="#progress"><i class="glyphicon glyphicon-chevron-right"></i> Progress Bar</a></li>
+                        <li class=""><a href="#typeahead"><i class="glyphicon glyphicon-chevron-right"></i> Typeahead</a></li>
+                        <li class=""><a href="#modal"><i class="glyphicon glyphicon-chevron-right"></i> Modal</a></li>
                     </ul>
                 </div>
-                <div class="span9">
+                <div class="col-md-9">
                     <section id="overview">
                         <div class="page-header">
                             <h1>Knockout-bootstrap Overview</h1>
@@ -81,8 +84,8 @@
                                 <li>~2kb</li>
                             </ul>
                         </p>
-                        <a class="btn btn-large btn-primary" href="https://raw.github.com/billpull/knockout-bootstrap/master/build/knockout-bootstrap.min.js" download="knockout-bootstrap.min.js">
-                            <i class="icon-download-alt icon-white"></i> Download</a>
+                        <a class="btn btn-lg btn-primary" href="https://raw.github.com/billpull/knockout-bootstrap/master/build/knockout-bootstrap.min.js" download="knockout-bootstrap.min.js">
+                            <i class="glyphicon glyphicon-download-alt"></i> Download</a>
                     </section>
                     <section id="tooltip">
                         <div class="page-header">
@@ -139,11 +142,11 @@
                             Takes text content from a template and puts it in a popover
                         </p>
                         <div class="bs-docs-example">
-                            <button class="btn btn-large btn-primary" data-bind="popover: {template: 'popoverTemplate', title: 'Oh Yea'}">Launch Simple Popover</button>
+                            <button class="btn btn-lg btn-primary" data-bind="popover: {template: 'popoverTemplate', title: 'Oh Yea'}">Launch Simple Popover</button>
 
-                            <button class="btn btn-large btn-primary" data-bind="popover: {template: 'popoverTemplate', title: 'Oh Yea', trigger: 'hover'}">Hover Simple Popover</button>
+                            <button class="btn btn-lg btn-primary" data-bind="popover: {template: 'popoverTemplate', title: 'Oh Yea', trigger: 'hover'}">Hover Simple Popover</button>
 
-                            <button class="btn btn-large btn-primary" data-bind="popover: {template: 'popoverTemplate', title: 'Oh Yea', trigger: 'focus'}">Focus Simple Popover</button>
+                            <button class="btn btn-lg btn-primary" data-bind="popover: {template: 'popoverTemplate', title: 'Oh Yea', trigger: 'focus'}">Focus Simple Popover</button>
                         </div>
 <pre class="prettyprint linenums">
 &lt;button class="btn" data-bind="popover: {template: 'popoverTemplate', title: 'Oh Yea'}"&gt;
@@ -161,7 +164,7 @@
                         </p>
                         <div class="bs-docs-example">
                             <h1 data-bind="text: popoverBindingHeader"></h1>
-                            <button class="btn btn-large btn-primary" data-bind="popover: {template: 'popoverBindingTemplate', placement: 'right', title: 'Oh Yea Binding'}">Launch Binding Popover</button>
+                            <button class="btn btn-lg btn-primary" data-bind="popover: {template: 'popoverBindingTemplate', placement: 'right', title: 'Oh Yea Binding'}">Launch Binding Popover</button>
                         </div>
 <pre class="prettyprint linenums">
 &lt;h1 data-bind="text: popoverBindingHeader"&gt;&lt;/h1&gt;
@@ -342,7 +345,7 @@ var ViewModel = function() {
                             feature the example allows you to add and remove items from the array.
                          <div class="bs-docs-example">
                             <div class="row">
-                                <div class="span4">
+                                <div class="col-md-4">
                                     <form>
                                         <label>Javascript Frameworks</label>
                                         <input type="text" data-bind="typeahead: jsFrameworks" />
@@ -355,11 +358,11 @@ var ViewModel = function() {
                                         </div>
                                     </form>
                                 </div>
-                                <div class="well span4">
+                                <div class="well col-md-4">
                                     <ul class="nav nav-list" data-bind="foreach: jsFrameworks">
                                         <li>
                                             <span data-bind="text: $data"></span>
-                                            <span class="icon-remove" data-bind="click: $root.removeFramework"></span>
+                                            <span class="glyphicon glyphicon-remove" data-bind="click: $root.removeFramework"></span>
                                         </li>
                                     </ul>
                                 </div>
@@ -368,7 +371,7 @@ var ViewModel = function() {
 <pre class="prettyprint linenums">
 &lt;!-- View Code --&gt;
 &lt;div class="row"&gt;
-    &lt;div class="span4"&gt;
+    &lt;div class="col-md-4"&gt;
         &lt;form&gt;
             &lt;label&gt;Javascript Frameworks&lt;/label&gt;
             &lt;input type="text" data-bind="typeahead: jsFrameworks" /&gt;
@@ -381,11 +384,11 @@ var ViewModel = function() {
             &lt;/div&gt;
         &lt;/form&gt;
     &lt;/div&gt;
-    &lt;div class="well span4"&gt;
+    &lt;div class="well col-md-4"&gt;
         &lt;ul class="nav nav-list" data-bind="foreach: jsFrameworks"&gt;
             &lt;li&gt;
                 &lt;span data-bind="text: $data"&gt;&lt;/span&gt;
-                &lt;span class="icon-remove" data-bind="click: $root.removeFramework"&gt;&lt;/span&gt;
+                &lt;span class="glyphicon glyphicon-remove" data-bind="click: $root.removeFramework"&gt;&lt;/span&gt;
             &lt;/li&gt;
         &lt;/ul&gt;
     &lt;/div&gt;
@@ -415,6 +418,36 @@ var ViewModel = function() {
 };
 </pre>
                     </section>
+                    <section id="modal">
+                        <div class="page-header">
+                            <h1>Modal</h1>
+                        </div>
+                        <h2>Examples</h2>
+                        <p>
+
+                        </p>
+                        <div class="bs-docs-example">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <button class="btn btn-lg btn-primary" data-bind="modal: {template: 'modalBindingTemplate', data: colors }">Launch Modal</button>
+                                </div>
+                                <div class="col-md-4">
+                                    <button class="btn btn-lg btn-primary" data-bind="modal: {template: 'modalBindingTemplate', data: jsFrameworks }">Launch Modal 2</button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <button class="btn btn-lg btn-primary" data-bind="modal: {template: 'modalSmallBindingTemplate', data: colors }">Small Modal</button>
+                                </div>
+                                <div class="col-md-4">
+                                    <button class="btn btn-lg btn-primary" data-bind="modal: {template: 'modalLargeBindingTemplate', data: jsFrameworks }">Large Modal</button>
+                                </div>
+                            </div>
+                        </div>
+                        <pre>
+
+                        </pre>
+                    </section>
                 </div>
             </div>
         </div>
@@ -433,7 +466,7 @@ var ViewModel = function() {
 
                 self.popoverBindingHeader = ko.observable('Binding in A Popover');
                 self.alerts = ko.observableArray([
-                        {'message': 'Here is an Error', 'priority': 'error'},
+                        {'message': 'Here is an Error', 'priority': 'danger'},
                         {'message': 'Here is a Warning', 'priority': 'warning'},
                         {'message': 'Here is a Success', 'priority': 'success'},
                         {'message': 'Here is some Info', 'priority': 'info'}
@@ -477,13 +510,15 @@ var ViewModel = function() {
                 self.removeFramework = function(framework) {
                     self.jsFrameworks.remove(framework);
                 };
+
+
             };
 
             $(function(){
                 // make code pretty
                 window.prettyPrint && prettyPrint();
 
-                var viewModel = new ExampleViewModel();
+                viewModel = new ExampleViewModel();
 
                 ko.applyBindings(viewModel);
             });
@@ -506,6 +541,41 @@ var ViewModel = function() {
                       </tbody>
                 </table>
             </form>
+        </script>
+
+        <script type="text/html" id="modalBindingTemplate">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                    </div>
+                    <div class="modal-body">
+                        Modal Data
+                        <!-- ko text: ko.toJSON($data) --><!-- /ko -->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </script>
+
+        <script type="text/html" id="modalSmallBindingTemplate">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    Small Modal
+                </div>
+            </div>
+        </script>
+
+        <script type="text/html" id="modalLargeBindingTemplate">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    Large Modal
+                </div>
+            </div>
         </script>
     </body>
 </html>

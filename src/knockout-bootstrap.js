@@ -365,6 +365,39 @@ function setupKoBootstrap(koObject, $) {
             trigger: "manual"
         }
     };
+
+    // Bind Twitter Modal
+    koObject.bindingHandlers.modal = {
+        init: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+
+            var $element = $(element);
+            var modalBindingValues = koObject.utils.unwrapObservable(valueAccessor());
+            var template = modalBindingValues.template || '';
+            var options = modalBindingValues.options || {};
+            var data = modalBindingValues.data || {};
+
+            var modal = $('<div/>', {
+                'class': "modal fade",
+                'tab-index': '-1',
+                'role': 'dialog',
+                'aria-hidden': 'true',
+                'aria-labelledby': "myLargeModalLabel",
+                'data-bind': "template: { name: template, if: data, data: data }"
+            });
+
+            koObject.applyBindings({
+                template: template,
+                data: data
+            }, modal[0]);
+
+            $element.on('click', function() {
+                modal.modal(options);
+            });
+
+            return { controlsDescendantBindings: true };
+
+        }
+    }
 }
 
 (function (factory) {

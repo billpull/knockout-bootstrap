@@ -31,7 +31,7 @@ body > .navbar {
 }
 
 /* Change the docs' brand */
-body > .navbar .brand {
+body > .navbar .navbar-brand {
   padding-right: 0;
   padding-left: 0;
   margin-left: 20px;
@@ -43,7 +43,7 @@ body > .navbar .brand {
      -moz-transition: all .2s linear;
           transition: all .2s linear;
 }
-body > .navbar .brand:hover {
+body > .navbar .navbar-brand:hover {
   text-decoration: none;
   text-shadow: 0 1px 0 rgba(255,255,255,.1), 0 0 30px rgba(255,255,255,.4);
 }
@@ -819,7 +819,7 @@ form.bs-docs-example {
           box-shadow: inset 1px 0 0 rgba(0,0,0,.1), inset -1px 0 0 rgba(0,0,0,.1);
 }
 /* Chevrons */
-.bs-docs-sidenav .icon-chevron-right {
+.bs-docs-sidenav .glyphicon-chevron-right {
   float: right;
   margin-top: 2px;
   margin-right: -6px;
@@ -828,11 +828,11 @@ form.bs-docs-example {
 .bs-docs-sidenav > li > a:hover {
   background-color: #f5f5f5;
 }
-.bs-docs-sidenav a:hover .icon-chevron-right {
+.bs-docs-sidenav a:hover .glyphicon-chevron-right {
   opacity: .5;
 }
-.bs-docs-sidenav .active .icon-chevron-right,
-.bs-docs-sidenav .active a:hover .icon-chevron-right {
+.bs-docs-sidenav .active .glyphicon-chevron-right,
+.bs-docs-sidenav .active a:hover .glyphicon-chevron-right {
   background-image: url(../img/glyphicons-halflings-white.png);
   opacity: 1;
 }
