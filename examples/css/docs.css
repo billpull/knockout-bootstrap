@@ -21,7 +21,70 @@ h3 code {
   font-weight: normal;
 }
 
+form {
+  padding-bottom: 20px;
+}
 
+
+.typeahead,
+.tt-query,
+.tt-hint {
+  width: 396px;
+  height: 30px;
+  padding: 8px 12px;
+  border: 2px solid #ccc;
+  outline: none;
+}
+
+.typeahead {
+  background-color: #fff;
+}
+
+.typeahead:focus {
+  border: 2px solid #0097cf;
+}
+
+.tt-hint {
+  color: white;
+}
+
+.tt-dropdown-menu {
+  width: 200px;
+  margin-top: 0;
+  padding: 2px 0;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  -webkit-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+  -moz-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+  box-shadow: 0 5px 10px rgba(0,0,0,.2);
+}
+
+label {
+  display: block;
+}
+
+input, textarea, .uneditable-input {
+  width: 206px;
+}
+
+.tt-suggestion {
+  padding: 3px 20px;
+}
+
+.tt-suggestion.tt-cursor {
+  color: #fff;
+  background-color: #0097cf;
+
+}
+
+.tt-suggestion p {
+  margin: 0;
+}
+
+.form-actions {
+  margin: 20px 0;
+}
 
 /* Tweak navbar brand link to be super sleek
 -------------------------------------------------- */
@@ -31,7 +94,7 @@ body > .navbar {
 }
 
 /* Change the docs' brand */
-body > .navbar .brand {
+body > .navbar .navbar-brand {
   padding-right: 0;
   padding-left: 0;
   margin-left: 20px;
@@ -43,9 +106,13 @@ body > .navbar .brand {
      -moz-transition: all .2s linear;
           transition: all .2s linear;
 }
-body > .navbar .brand:hover {
+body > .navbar .navbar-brand:hover {
   text-decoration: none;
   text-shadow: 0 1px 0 rgba(255,255,255,.1), 0 0 30px rgba(255,255,255,.4);
+}
+
+.nav-list>.active>a:before, .nav-list>.active>a:hover {
+  color: white;
 }
 
 
@@ -90,6 +157,7 @@ hr.soften {
 .jumbotron {
   position: relative;
   padding: 40px 0;
+  margin: 0;
   color: #fff;
   text-align: center;
   text-shadow: 0 1px 3px rgba(0,0,0,.4), 0 0 30px rgba(0,0,0,.075);
@@ -157,6 +225,10 @@ hr.soften {
   -webkit-box-shadow: inset 0 2px 4px rgba(0,0,0,.1), 0 1px 0 rgba(255,255,255,.1);
      -moz-box-shadow: inset 0 2px 4px rgba(0,0,0,.1), 0 1px 0 rgba(255,255,255,.1);
           box-shadow: inset 0 2px 4px rgba(0,0,0,.1), 0 1px 0 rgba(255,255,255,.1);
+}
+
+.page-header {
+  margin: 20px 0 30px;
 }
 
 
@@ -819,7 +891,7 @@ form.bs-docs-example {
           box-shadow: inset 1px 0 0 rgba(0,0,0,.1), inset -1px 0 0 rgba(0,0,0,.1);
 }
 /* Chevrons */
-.bs-docs-sidenav .icon-chevron-right {
+.bs-docs-sidenav .glyphicon-chevron-right {
   float: right;
   margin-top: 2px;
   margin-right: -6px;
@@ -828,11 +900,11 @@ form.bs-docs-example {
 .bs-docs-sidenav > li > a:hover {
   background-color: #f5f5f5;
 }
-.bs-docs-sidenav a:hover .icon-chevron-right {
+.bs-docs-sidenav a:hover .glyphicon-chevron-right {
   opacity: .5;
 }
-.bs-docs-sidenav .active .icon-chevron-right,
-.bs-docs-sidenav .active a:hover .icon-chevron-right {
+.bs-docs-sidenav .active .glyphicon-chevron-right,
+.bs-docs-sidenav .active a:hover .glyphicon-chevron-right {
   background-image: url(../img/glyphicons-halflings-white.png);
   opacity: 1;
 }

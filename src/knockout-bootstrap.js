@@ -34,7 +34,32 @@ function setupKoBootstrap(koObject, $) {
         init: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
             var $element = $(element);
             var allBindings = allBindingsAccessor();
-            var typeaheadOpts = { source: koObject.utils.unwrapObservable(valueAccessor()) };
+            var substringMatcher = function(strs) {
+                return function findMatches(q, cb) {
+                    var matches, substrRegex;
+
+                    // an array that will be populated with substring matches
+                    matches = [];
+
+                    // regex used to determine if a string contains the substring `q`
+                    substrRegex = new RegExp(q, 'i');
+
+                    // iterate through the pool of strings and for any string that
+                    // contains the substring `q`, add it to the `matches` array
+                    $.each(strs, function(i, str) {
+                        if (substrRegex.test(str)) {
+                            // the typeahead jQuery plugin expects suggestions to a
+                            // JavaScript object, refer to typeahead docs for more info
+                            matches.push({ value: str });
+                        }
+                    });
+
+                    cb(matches);
+                };
+            };
+            var typeaheadOpts = {
+                source: substringMatcher(koObject.utils.unwrapObservable(valueAccessor()))
+            };
 
             if (allBindings.typeaheadOptions) {
                 $.each(allBindings.typeaheadOptions, function(optionName, optionValue) {
@@ -42,7 +67,11 @@ function setupKoBootstrap(koObject, $) {
                 });
             }
 
-            $element.attr("autocomplete", "off").typeahead(typeaheadOpts);
+            $element.attr("autocomplete", "off").typeahead({
+                hint: true,
+                highlight: true,
+                minLength: 1
+            }, typeaheadOpts);
         }
     };
 
@@ -52,7 +81,7 @@ function setupKoBootstrap(koObject, $) {
             var $element = $(element);
 
             var bar = $('<div/>', {
-                'class': 'bar',
+                'class': 'progress-bar',
                 'data-bind': 'style: { width:' + valueAccessor() + ' }'
             });
 
@@ -124,245 +153,136 @@ function setupKoBootstrap(koObject, $) {
     };
 
     // Bind Twitter Popover
-    // Bind Twitter Popover - had to add because the standard one is not working correctly
     koObject.bindingHandlers.popover = {
-        init: function(element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+        init: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
             var $element = $(element);
-
-            // read popover options
             var popoverBindingValues = koObject.utils.unwrapObservable(valueAccessor());
-
-            // build up all the options
-            var tmpOptions = {};
-
-            // set popover title - will use default title attr if none given
-            if (popoverBindingValues.title) {
-                tmpOptions.title = popoverBindingValues.title;
-            }else{
-                //if title is empty, then fix template
-                tmpOptions.template = '<div class="popover" role="tooltip"><div class="arrow"></div><div class="popover-content"></div></div>';
+            var template = popoverBindingValues.template || false;
+            var options = popoverBindingValues.options || {title: 'popover'};
+            var data = popoverBindingValues.data || false;
+            if (template !== false) {
+                if (data) {
+                    options.content = "<!-- ko template: { name: template, if: data, data: data } --><!-- /ko -->";
+                }
+                else {
+                    options.content = $('#' + template).html();
+                }
+                options.html = true;
             }
+            $element.on('shown.bs.popover', function(event) {
 
-            // set popover placement
-            if (popoverBindingValues.placement) {
-                tmpOptions.placement = popoverBindingValues.placement;
-            }
+                var popoverData = $(event.target).data();
+                var popoverEl = popoverData['bs.popover'].$tip;
+                var options = popoverData['bs.popover'].options || {};
+                var button = $(event.target);
+                var buttonPosition = button.position();
+                var buttonDimensions = {
+                    x: button.outerWidth(),
+                    y: button.outerHeight()
+                };
 
-            // set popover container
-            if (popoverBindingValues.container) {
-                tmpOptions.container = popoverBindingValues.container;
-            }
-
-            // set popover delay
-            if (popoverBindingValues.delay) {
-                tmpOptions.delay = popoverBindingValues.delay;
-            }
-
-            // create unique identifier to bind to
-            var uuid = guid();
-            var domId = "ko-bs-popover-" + uuid;
-
-            // if template defined, assume a template is being used
-            var tmplDom;
-            var tmplHtml = "";
-            if (popoverBindingValues.template) {
-                // set popover template id
-                var tmplId = popoverBindingValues.template;
-
-                // set data for template
-                var data = popoverBindingValues.data;
-
-                // get template html
-                if (!data) {
-                    tmplHtml = $('#' + tmplId).html();
-                } else {
-                    tmplHtml = function() {
-                        var container = $('<div data-bind="template: { name: template, if: data, data: data }"></div>');
-
-                        koObject.applyBindings({
-                            template: tmplId,
-                            data: data
-                        }, container[0]);
-                        return container;
-                    };
+                if (data) {
+                    koObject.applyBindings({template: template, data: data}, popoverEl[0]);
+                }
+                else {
+                    koObject.applyBindings(viewModel, popoverEl[0]);
                 }
 
-                // create DOM object to use for popover content
-                tmplDom = $('<div/>', {
-                    "class": "ko-popover",
-                    "id": domId
-                }).html(tmplHtml);
+                var popoverDimensions = {
+                    x: popoverEl.outerWidth(),
+                    y: popoverEl.outerHeight()
+                };
 
-            } else {
-                // Must be using static content for body of popover
-                if (popoverBindingValues.dataContent) {
-                    tmplHtml = popoverBindingValues.dataContent;
-                }
-
-                // create DOM object to use for popover content
-                tmplDom = $('<div/>', {
-                    "class": "ko-popover",
-                    "id": domId
-                }).html(tmplHtml);
-            }
-
-            // create correct binding context
-            var childBindingContext = bindingContext.createChildContext(viewModel);
-
-            // set internal content
-            tmpOptions.content = $(tmplDom[0]).outerHtml();
-
-            // Need to copy this, otherwise all the popups end up with the value of the last item
-            var popoverOptions = $.extend({}, koObject.bindingHandlers.popover.options, tmpOptions);
-
-            // see if the close button should be added to the title
-            if (popoverOptions.addCloseButtonToTitle) {
-                var closeHtml = popoverOptions.closeButtonHtml;
-                if (closeHtml === undefined) {
-                    closeHtml = ' &times ';
-                }
-                if (popoverOptions.title === undefined) {
-                        popoverOptions.title = ' ';
-                }
-
-                var titleHtml = popoverOptions.title;
-                var buttonHtml = '  <button type="button" class="close" data-dismiss="popover">' + closeHtml + '</button>';
-                popoverOptions.title = titleHtml + buttonHtml;
-            }
-
-            // Build up the list of eventTypes if it is defined
-            var eventType = "";
-            if (popoverBindingValues.trigger) {
-                var triggers = popoverBindingValues.trigger.split(' ');
-
-                for (var i = 0; i < triggers.length; i++) {
-                    var trigger = triggers[i];
-
-                    if (trigger !== 'manual') {
-                        if (i > 0) {
-                            eventType += ' ';
-                        }
-
-                        if (trigger === 'click') {
-                            eventType += 'click';
-                        } else if (trigger === 'hover') {
-                            eventType += 'mouseenter mouseleave';
-                        } else if (trigger === 'focus') {
-                            eventType += 'focus blur';
-                        }
-                    }
-                }
-            } else {
-                eventType = 'click';
-            }
-
-            var lastEventType = "";
-            // bind popover to element click
-            $element.on(eventType, function(e) {
-                e.stopPropagation();
-
-                var popoverAction = 'toggle';
-                var popoverTriggerEl = $(this);
-
-                // Check state before we toggle it so the animation gives us the correct state
-                var popoverPrevStateVisible = $('#' + domId).is(':visible');
-
-                // if set eventType to "click focus", then both events were fired in chrome,
-                // in safari only click was fired, and focus/blur will be missed for a lot of tags.
-                if(lastEventType === 'focus' && e.type === 'click' && popoverPrevStateVisible ){
-                    lastEventType = e.type;
-                    return;
-                }
-                lastEventType = e.type;
-
-
-                // show/toggle popover
-                popoverTriggerEl.popover(popoverOptions).popover(popoverAction);
-
-                // hide other popovers - other than the one we are manipulating
-                var popoverInnerEl = $('#' + domId);
-                var $oldPopovers = $('.ko-popover').not(popoverInnerEl).parents('.popover');
-                $oldPopovers.each(function () {
-                    // popover is attached to the previous element or its parent if a container was specified
-                    var $this = $(this);
-
-                    var popoverFound = false;
-                    var $parent = $this.parent();
-                    var parentData = $parent.data('bs.popover');
-                    if (parentData) {
-                        popoverFound = true;
-                        $parent.popover('destroy');
-                    }
-
-                    if (!popoverFound) {
-                        var $prev = $(this).prev();
-                        var prevData = $prev.data('bs.popover');
-                        if (prevData) {
-                            popoverFound = true;
-                            $prev.popover('destroy');
-                        }
-                    }
+                popoverEl.find('button[data-dismiss="popover"]').click(function() {
+                    button.popover('hide');
                 });
-                // popover
-                //$('.ko-popover').not(popoverInnerEl).parents('.popover').remove();
 
-                // if the popover was visible, it should now be hidden, so bind the view model to our dom ID
-                if (!popoverPrevStateVisible) {
-
-                    koObject.applyBindingsToDescendants(childBindingContext, popoverInnerEl[0]);
-
-                    /* Since bootstrap calculates popover position before template is filled,
-                     * a smaller popover height is used and it appears moved down relative to the trigger element.
-                     * So we have to fix the position after the bind
-                     */
-
-                    var triggerElementPosition = $(element).offset().top;
-                    var triggerElementLeft = $(element).offset().left;
-                    var triggerElementHeight = $(element).outerHeight();
-                    var triggerElementWidth = $(element).outerWidth();
-
-                    var popover = $(popoverInnerEl).parents('.popover');
-                    var popoverHeight = popover.outerHeight();
-                    var popoverWidth = popover.outerWidth();
-                    var arrowSize = 10;
-
-                    switch (popoverOptions.offset && popoverOptions.placement) {
-                        case 'left':
-                            popover.offset({ top: Math.max(0, triggerElementPosition - popoverHeight / 2 + triggerElementHeight / 2), left: Math.max(0, triggerElementLeft - arrowSize - popoverWidth) });
-                            break;
-                        case 'right':
-                            popover.offset({ top: Math.max(0, triggerElementPosition - popoverHeight / 2 + triggerElementHeight / 2) });
-                            break;
-                        case 'top':
-                            popover.offset({ top: Math.max(0, triggerElementPosition - popoverHeight - arrowSize), left: Math.max(0, triggerElementLeft - popoverWidth / 2 + triggerElementWidth / 2) });
-                            break;
-                        case 'bottom':
-                            popover.offset({ top: Math.max(0, triggerElementPosition + triggerElementHeight + arrowSize), left: Math.max(0, triggerElementLeft - popoverWidth / 2 + triggerElementWidth / 2) });
-                    }
-
-                    // bind close button to remove popover
-                    var popoverParent;
-                    if (popoverOptions.container) {
-                        popoverParent = $(popoverOptions.container);
-                    } else {
-                        popoverParent = popoverTriggerEl.parent();
-                    }
-                    popoverParent.on('click', 'button[data-dismiss="popover"]', function () {
-                        popoverTriggerEl.popover('hide');
-                    });
+                switch (options.placement) {
+                    case 'right':
+                        popoverEl.css({
+                            left: buttonDimensions.x + buttonPosition.left,
+                            top: (buttonDimensions.y / 2 + buttonPosition.top) - popoverDimensions.y / 2
+                        });
+                        break;
+                    case 'left':
+                        popoverEl.css({
+                            left: buttonPosition.left - popoverDimensions.x,
+                            top: (buttonDimensions.y / 2 + buttonPosition.top) - popoverDimensions.y / 2
+                        });
+                        break;
+                    case 'top':
+                        popoverEl.css({
+                            left: buttonPosition.left + (buttonDimensions.x / 2 - popoverDimensions.x / 2),
+                            top: buttonPosition.top - popoverDimensions.y
+                        });
+                        break;
+                    case 'bottom':
+                        popoverEl.css({
+                            left: buttonPosition.left + (buttonDimensions.x / 2 - popoverDimensions.x / 2),
+                            top: buttonPosition.top + buttonDimensions.y
+                        });
+                        break;
                 }
-
-
-                // Also tell KO *not* to bind the descendants itself, otherwise they will be bound twice
-                return { controlsDescendantBindings: true };
             });
-        },
-        options: {
-            placement: "right",
-            offset: false,
-            html: true,
-            addCloseButtonToTitle: false,
-            trigger: "manual"
+
+            $element.popover(options);
+
+            return { controlsDescendantBindings: true };
+
+        }
+    };
+
+    // Bind Twitter Modal
+    koObject.bindingHandlers.modal = {
+        init: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
+
+            var $element = $(element);
+            var modalBindingValues = koObject.utils.unwrapObservable(valueAccessor());
+            var template = modalBindingValues.template || false;
+            var options = modalBindingValues.options || {};
+            var data = modalBindingValues.data || false;
+            var fade = modalBindingValues.fade || false;
+            var openModal = modalBindingValues.openModal || false;
+            options.show = false;
+
+            var modalAttr = {
+                'class': "modal" + (fade ? ' fade' : ''),
+                'tab-index': '-1',
+                'role': 'dialog',
+                'aria-hidden': 'true'
+            };
+            if (data) {
+                modalAttr['data-bind'] = "template: { name: template, if: data, data: data }";
+            }
+
+            var modal = $('<div/>', modalAttr);
+
+            if (!data) {
+                modal.html($('#'+template).html());
+            }
+
+
+            modal.modal(options);
+
+            $element.on('click', function() {
+                if (data) {
+                    koObject.applyBindings({
+                        template: template,
+                        data: data
+                    }, modal[0]);
+
+                } else {
+                    koObject.applyBindings(viewModel, modal[0]);
+                }
+                modal.modal('show');
+                if (openModal) {
+                    openModal();
+                }
+                $('.modal-backdrop').css({height: $(window).height(), position: 'fixed'});
+            });
+
+            return { controlsDescendantBindings: true };
+
         }
     };
 }
