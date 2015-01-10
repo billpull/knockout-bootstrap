@@ -13,7 +13,6 @@
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
         <link rel="stylesheet" href="css/bootstrap.min.css" />
-        <link rel="stylesheet" href="css/bootstrap-responsive.min.css" />
         <link rel="stylesheet" href="css/docs.css" />
         <link rel="stylesheet" href="css/prettify.css" />
     </head>
@@ -23,46 +22,48 @@
         <![endif]-->
 
         <div class="navbar navbar-inverse navbar-fixed-top">
-          <div class="navbar-inner">
             <div class="container">
-              <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-              </button>
-              <a class="brand" href="./index.html">Knockout-Bootstrap</a>
-              <div class="nav-collapse collapse">
-                <ul class="nav">
-                  <li class="">
+              <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+              </div>
+              <a class="navbar-brand" href="./index.html">Knockout-Bootstrap</a>
+              <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                  <li>
                     <a href="./index.html">Home</a>
                   </li>
                 </ul>
               </div>
             </div>
-          </div>
         </div>
 
         <header class="jumbotron subhead">
           <div class="container">
             <h1>Knockout-Bootstrap</h1>
-            <p class="lead">Create rich two way interactions with Boostrap and Knockout bindings
+            <p class="lead">Create rich two way interactions with Bootstrap and Knockout bindings
           </p></div>
         </header>
 
         <!-- Add your site or application content here -->
         <div class="container">
             <div class="row">
-                <div class="span3 bs-docs-sidebar">
+                <div class="col-md-3 bs-docs-sidebar">
                     <ul class="nav nav-list bs-docs-sidenav">
-                        <li class=""><a href="#overview"><i class="icon-chevron-right"></i> Overview</a></li>
-                        <li class=""><a href="#tooltip"><i class="icon-chevron-right"></i> Tooltip</a></li>
-                        <li class=""><a href="#popover"><i class="icon-chevron-right"></i> Popover</a></li>
-                        <li class=""><a href="#alert"><i class="icon-chevron-right"></i> Alert</a></li>
-                        <li class=""><a href="#progress"><i class="icon-chevron-right"></i> Progress Bar</a></li>
-                        <li class=""><a href="#typeahead"><i class="icon-chevron-right"></i> Typeahead</a></li>
+                        <li class="active"><a href="#overview"><i class="glyphicon glyphicon-chevron-right"></i> Overview</a></li>
+                        <li class=""><a href="#tooltip"><i class="glyphicon glyphicon-chevron-right"></i> Tooltip</a></li>
+                        <li class=""><a href="#popover"><i class="glyphicon glyphicon-chevron-right"></i> Popover</a></li>
+                        <li class=""><a href="#alert"><i class="glyphicon glyphicon-chevron-right"></i> Alert</a></li>
+                        <li class=""><a href="#progress"><i class="glyphicon glyphicon-chevron-right"></i> Progress Bar</a></li>
+                        <li class=""><a href="#typeahead"><i class="glyphicon glyphicon-chevron-right"></i> Typeahead</a></li>
+                        <li class=""><a href="#modal"><i class="glyphicon glyphicon-chevron-right"></i> Modal</a></li>
                     </ul>
                 </div>
-                <div class="span9">
+                <div class="col-md-9">
                     <section id="overview">
                         <div class="page-header">
                             <h1>Knockout-bootstrap Overview</h1>
@@ -81,8 +82,8 @@
                                 <li>~2kb</li>
                             </ul>
                         </p>
-                        <a class="btn btn-large btn-primary" href="https://raw.github.com/billpull/knockout-bootstrap/master/build/knockout-bootstrap.min.js" download="knockout-bootstrap.min.js">
-                            <i class="icon-download-alt icon-white"></i> Download</a>
+                        <a class="btn btn-lg btn-primary" href="https://raw.github.com/billpull/knockout-bootstrap/master/build/knockout-bootstrap.min.js" download="knockout-bootstrap.min.js">
+                            <i class="glyphicon glyphicon-download-alt"></i> Download</a>
                     </section>
                     <section id="tooltip">
                         <div class="page-header">
@@ -139,14 +140,14 @@
                             Takes text content from a template and puts it in a popover
                         </p>
                         <div class="bs-docs-example">
-                            <button class="btn btn-large btn-primary" data-bind="popover: {template: 'popoverTemplate', title: 'Oh Yea'}">Launch Simple Popover</button>
+                            <button class="btn btn-lg btn-primary" data-bind="popover: {template: 'popoverTemplate', options: {title: 'Oh Yea'}}">Launch Simple Popover</button>
 
-                            <button class="btn btn-large btn-primary" data-bind="popover: {template: 'popoverTemplate', title: 'Oh Yea', trigger: 'hover'}">Hover Simple Popover</button>
+                            <button class="btn btn-lg btn-primary" data-bind="popover: {template: 'popoverTemplate', options: {title: 'Oh Yea', trigger: 'hover'}}">Hover Simple Popover</button>
 
-                            <button class="btn btn-large btn-primary" data-bind="popover: {template: 'popoverTemplate', title: 'Oh Yea', trigger: 'focus'}">Focus Simple Popover</button>
+                            <button class="btn btn-lg btn-primary" data-bind="popover: {template: 'popoverTemplate', options: {title: 'Oh Yea', trigger: 'focus'}}">Focus Simple Popover</button>
                         </div>
 <pre class="prettyprint linenums">
-&lt;button class="btn" data-bind="popover: {template: 'popoverTemplate', title: 'Oh Yea'}"&gt;
+&lt;button class="btn" data-bind="popover: {template: 'popoverTemplate', options: {title: 'Oh Yea'}}"&gt;
     Launch Simple Popover
 &lt;/button&gt;
 
@@ -161,11 +162,11 @@
                         </p>
                         <div class="bs-docs-example">
                             <h1 data-bind="text: popoverBindingHeader"></h1>
-                            <button class="btn btn-large btn-primary" data-bind="popover: {template: 'popoverBindingTemplate', placement: 'right', title: 'Oh Yea Binding'}">Launch Binding Popover</button>
+                            <button class="btn btn-lg btn-primary" data-bind="popover: {template: 'popoverBindingTemplate', options: {title: 'Oh Yea Binding'}}">Launch Binding Popover</button>
                         </div>
 <pre class="prettyprint linenums">
 &lt;h1 data-bind="text: popoverBindingHeader"&gt;&lt;/h1&gt;
-&lt;button class="btn" data-bind="popover: {template: 'popoverBindingTemplate', title: 'Oh Yea Binding'}"&gt;
+&lt;button class="btn" data-bind="popover: {template: 'popoverBindingTemplate', options: {title: 'Oh Yea Binding'}}"&gt;
     Launch Binding Popover
 &lt;/button&gt;
 
@@ -195,28 +196,22 @@
                           </thead>
                           <tbody>
                            <tr>
-                             <td>placement</td>
-                             <td>string | function</td>
-                             <td>'right'</td>
-                             <td>how to position the popover - top | bottom | left | right</td>
-                           </tr>
-                           <tr>
-                             <td>trigger</td>
-                             <td>string</td>
-                             <td>'click'</td>
-                             <td>how popover is triggered - click | toggle | hover | focus | manual</td>
-                           </tr>
-                           <tr>
-                             <td>title</td>
-                             <td>string | function</td>
-                             <td>''</td>
-                             <td>default title value if `title` attribute isn't present</td>
+                             <td>options</td>
+                             <td>object</td>
+                             <td>{title: 'Popover'}</td>
+                             <td>refer to <a href="http://getbootstrap.com/javascript/#popovers">official documentation</a> for options.</td>
                            </tr>
                            <tr>
                              <td>template</td>
                              <td>string</td>
                              <td>''</td>
                              <td>the id to the template for the content</td>
+                           </tr>
+                           <tr>
+                             <td>data</td>
+                             <td>string | function</td>
+                             <td>''</td>
+                             <td>the data for the template</td>
                            </tr>
                           </tbody>
                         </table>
@@ -342,7 +337,7 @@ var ViewModel = function() {
                             feature the example allows you to add and remove items from the array.
                          <div class="bs-docs-example">
                             <div class="row">
-                                <div class="span4">
+                                <div class="col-md-6">
                                     <form>
                                         <label>Javascript Frameworks</label>
                                         <input type="text" data-bind="typeahead: jsFrameworks" />
@@ -350,16 +345,16 @@ var ViewModel = function() {
                                     <form data-bind="submit: addFramework">
                                         <label>Add a framework</label>
                                         <input type="text" data-bind="value: frameworkToAdd, valueUpdate:'afterkeydown'" />
-                                        <div class="form-actions">
-                                            <button class="btn" type="submit" data-bind="enable: frameworkToAdd().length > 0">Add</button>
+                                        <div class="form-actions well">
+                                            <button class="btn btn-default" type="submit" data-bind="enable: frameworkToAdd().length > 0">Add</button>
                                         </div>
                                     </form>
                                 </div>
-                                <div class="well span4">
+                                <div class="well col-md-5">
                                     <ul class="nav nav-list" data-bind="foreach: jsFrameworks">
                                         <li>
                                             <span data-bind="text: $data"></span>
-                                            <span class="icon-remove" data-bind="click: $root.removeFramework"></span>
+                                            <span class="glyphicon glyphicon-remove" data-bind="click: $root.removeFramework"></span>
                                         </li>
                                     </ul>
                                 </div>
@@ -368,7 +363,7 @@ var ViewModel = function() {
 <pre class="prettyprint linenums">
 &lt;!-- View Code --&gt;
 &lt;div class="row"&gt;
-    &lt;div class="span4"&gt;
+    &lt;div class="col-md-4"&gt;
         &lt;form&gt;
             &lt;label&gt;Javascript Frameworks&lt;/label&gt;
             &lt;input type="text" data-bind="typeahead: jsFrameworks" /&gt;
@@ -377,15 +372,15 @@ var ViewModel = function() {
             &lt;label&gt;Add a framework&lt;/label&gt;
             &lt;input type="text" data-bind="value: frameworkToAdd, valueUpdate:'afterkeydown'" /&gt;
             &lt;div class="form-actions"&gt;
-                &lt;button class="btn" type="submit" data-bind="enable: frameworkToAdd().length > 0"&gt;Add&lt;/button&gt;
+                &lt;button class="btn btn-default" type="submit" data-bind="enable: frameworkToAdd().length > 0"&gt;Add&lt;/button&gt;
             &lt;/div&gt;
         &lt;/form&gt;
     &lt;/div&gt;
-    &lt;div class="well span4"&gt;
+    &lt;div class="well col-md-4"&gt;
         &lt;ul class="nav nav-list" data-bind="foreach: jsFrameworks"&gt;
             &lt;li&gt;
                 &lt;span data-bind="text: $data"&gt;&lt;/span&gt;
-                &lt;span class="icon-remove" data-bind="click: $root.removeFramework"&gt;&lt;/span&gt;
+                &lt;span class="glyphicon glyphicon-remove" data-bind="click: $root.removeFramework"&gt;&lt;/span&gt;
             &lt;/li&gt;
         &lt;/ul&gt;
     &lt;/div&gt;
@@ -415,6 +410,111 @@ var ViewModel = function() {
 };
 </pre>
                     </section>
+                    <section id="modal">
+                        <div class="page-header">
+                            <h1>Modal</h1>
+                            <p>Modals are streamlined, but flexible, dialog prompts with the minimum required functionality and smart defaults.</p>
+                        </div>
+                        <h2>Examples</h2>
+                        <p>
+
+                        </p>
+                        <div class="bs-docs-example">
+                            <p data-bind="text: modalBindingBody"></p>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <button class="btn btn-lg btn-primary" data-bind="modal: {template: 'modalBindingTemplateLive'}">Change Text Live</button>
+                                </div>
+                                <div class="col-md-4">
+                                    <button class="btn btn-lg btn-primary" data-bind="modal: {template: 'modalBindingTemplateSave', openModal: openModal}">Change Text on Save</button>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <button class="btn btn-lg btn-primary" data-bind="modal: {template: 'modalSmallBindingTemplate', data: {modalBindingHeader: modalBindingHeader, body: 'Small Modal'} }">Small Modal</button>
+                                </div>
+                                <div class="col-md-4">
+                                    <button class="btn btn-lg btn-primary" data-bind="modal: {template: 'modalLargeBindingTemplate', data: {modalBindingHeader: modalBindingHeader, body: 'Large Modal'} }">Large Modal</button>
+                                </div>
+                            </div>
+                        </div>
+                        <pre  class="prettyprint linenums">
+&lt;!-- View Code --&gt;
+&lt;p data-bind=&quot;text: modalBindingBody&quot;&gt;&lt;/p&gt;
+&lt;div class=&quot;row&quot;&gt;
+    &lt;div class=&quot;col-md-4&quot;&gt;
+        &lt;button class=&quot;btn btn-lg btn-primary&quot; data-bind=&quot;modal: {template: &#39;modalBindingTemplateLive&#39;}&quot;&gt;Change Text Live&lt;/button&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;col-md-4&quot;&gt;
+        &lt;button class=&quot;btn btn-lg btn-primary&quot; data-bind=&quot;modal: {template: &#39;modalBindingTemplateSave&#39;, openModal: openModal}&quot;&gt;Change Text on Save&lt;/button&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;br /&gt;
+&lt;div class=&quot;row&quot;&gt;
+    &lt;div class=&quot;col-md-4&quot;&gt;
+        &lt;button class=&quot;btn btn-lg btn-primary&quot; data-bind=&quot;modal: {template: &#39;modalSmallBindingTemplate&#39;, data: {modalBindingHeader: modalBindingHeader, body: &#39;Small Modal&#39;} }&quot;&gt;Small Modal&lt;/button&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;col-md-4&quot;&gt;
+        &lt;button class=&quot;btn btn-lg btn-primary&quot; data-bind=&quot;modal: {template: &#39;modalLargeBindingTemplate&#39;, data: {modalBindingHeader: modalBindingHeader, body: &#39;Large Modal&#39;} }&quot;&gt;Large Modal&lt;/button&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- Model Code --&gt;
+var ViewModel = function() {
+    //....
+    //...
+    self.modalBindingHeader = ko.observable(&#39;Binding in A Modal&#39;);
+    self.modalBindingBody = ko.observable(&#39;Gotta love data binding!!.&#39;);
+    self.modalBindingTemp = ko.observable();
+    self.openModal = function() {
+        self.modalBindingTemp(self.modalBindingBody());
+    };
+    self.saveChange = function() {
+        self.modalBindingBody(self.modalBindingTemp());
+    };
+    //....
+    //...
+}
+                        </pre>
+                        <h3>Options</h3>
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                            <tr>
+                                <th style="width: 100px;">Name</th>
+                                <th style="width: 100px;">type</th>
+                                <th style="width: 50px;">default</th>
+                                <th>description</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>options</td>
+                                <td>object</td>
+                                <td>{show: false}</td>
+                                <td>refer to <a href="http://getbootstrap.com/javascript/#modals">official documentation</a> for options.</td>
+                            </tr>
+                            <tr>
+                                <td>template</td>
+                                <td>string</td>
+                                <td>''</td>
+                                <td>the id to the template for the content</td>
+                            </tr>
+                            <tr>
+                                <td>data</td>
+                                <td>string | function</td>
+                                <td>''</td>
+                                <td>the data for the template</td>
+                            </tr>
+                            <tr>
+                                <td>openModal</td>
+                                <td>function</td>
+                                <td>''</td>
+                                <td>function to execute when modal is opened.</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </section>
                 </div>
             </div>
         </div>
@@ -426,6 +526,7 @@ var ViewModel = function() {
         <script src="js/bootstrap.min.js"></script>
         <script src="js/knockout.js"></script>
         <script src="js/prettify.js"></script>
+        <script src="js/typeahead.jquery.js"></script>
         <script src="../src/knockout-bootstrap.js"></script>
         <script>
             var ExampleViewModel = function () {
@@ -433,7 +534,7 @@ var ViewModel = function() {
 
                 self.popoverBindingHeader = ko.observable('Binding in A Popover');
                 self.alerts = ko.observableArray([
-                        {'message': 'Here is an Error', 'priority': 'error'},
+                        {'message': 'Here is an Error', 'priority': 'danger'},
                         {'message': 'Here is a Warning', 'priority': 'warning'},
                         {'message': 'Here is a Success', 'priority': 'success'},
                         {'message': 'Here is some Info', 'priority': 'info'}
@@ -477,13 +578,23 @@ var ViewModel = function() {
                 self.removeFramework = function(framework) {
                     self.jsFrameworks.remove(framework);
                 };
+
+                self.modalBindingHeader = ko.observable('Binding in A Modal');
+                self.modalBindingBody = ko.observable('Gotta love data binding!!.');
+                self.modalBindingTemp = ko.observable();
+                self.openModal = function() {
+                    self.modalBindingTemp(self.modalBindingBody());
+                };
+                self.saveChange = function() {
+                    self.modalBindingBody(self.modalBindingTemp());
+                };
             };
 
             $(function(){
                 // make code pretty
                 window.prettyPrint && prettyPrint();
 
-                var viewModel = new ExampleViewModel();
+                viewModel = new ExampleViewModel();
 
                 ko.applyBindings(viewModel);
             });
@@ -506,6 +617,73 @@ var ViewModel = function() {
                       </tbody>
                 </table>
             </form>
+        </script>
+
+        <script type="text/html" id="modalBindingTemplateLive">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel0" data-bind="text: modalBindingHeader"></h4>
+                    </div>
+                    <div class="modal-body">
+                        <textarea cols="80" rows="5" data-bind="value: modalBindingBody, valueUpdate:'afterkeydown' "></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </script>
+
+        <script type="text/html" id="modalBindingTemplateSave">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel1" data-bind="text: modalBindingHeader"></h4>
+                    </div>
+                    <div class="modal-body">
+                        <textarea cols="80" rows="5" data-bind="value: modalBindingTemp, valueUpdate:'afterkeydown' "></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" data-bind="click: saveChange">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </script>
+
+        <script type="text/html" id="modalSmallBindingTemplate">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel2" data-bind="text: modalBindingHeader"></h4>
+                    </div>
+                    <div class="modal-body" data-bind="text: body">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </script>
+
+        <script type="text/html" id="modalLargeBindingTemplate">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel3" data-bind="text: modalBindingHeader"></h4>
+                    </div>
+                    <div class="modal-body" data-bind="text: body">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
         </script>
     </body>
 </html>
