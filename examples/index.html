@@ -12,7 +12,7 @@
 
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
-        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="css/bootstrap.min.css" />
         <link rel="stylesheet" href="css/docs.css" />
         <link rel="stylesheet" href="css/prettify.css" />
     </head>
@@ -337,7 +337,7 @@ var ViewModel = function() {
                             feature the example allows you to add and remove items from the array.
                          <div class="bs-docs-example">
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <form>
                                         <label>Javascript Frameworks</label>
                                         <input type="text" data-bind="typeahead: jsFrameworks" />
@@ -345,12 +345,12 @@ var ViewModel = function() {
                                     <form data-bind="submit: addFramework">
                                         <label>Add a framework</label>
                                         <input type="text" data-bind="value: frameworkToAdd, valueUpdate:'afterkeydown'" />
-                                        <div class="form-actions">
+                                        <div class="form-actions well">
                                             <button class="btn btn-default" type="submit" data-bind="enable: frameworkToAdd().length > 0">Add</button>
                                         </div>
                                     </form>
                                 </div>
-                                <div class="well col-md-4">
+                                <div class="well col-md-5">
                                     <ul class="nav nav-list" data-bind="foreach: jsFrameworks">
                                         <li>
                                             <span data-bind="text: $data"></span>
@@ -526,6 +526,7 @@ var ViewModel = function() {
         <script src="js/bootstrap.min.js"></script>
         <script src="js/knockout.js"></script>
         <script src="js/prettify.js"></script>
+        <script src="js/typeahead.jquery.js"></script>
         <script src="../src/knockout-bootstrap.js"></script>
         <script>
             var ExampleViewModel = function () {
