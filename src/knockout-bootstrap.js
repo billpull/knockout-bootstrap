@@ -150,7 +150,7 @@ function setupKoBootstrap(koObject, $) {
                 $element.tooltip(options);
             }
 			ko.utils.domNodeDisposal.addDisposeCallback(element, function () {
-				subsc && subsc.dispose();
+				if (subsc) subsc.dispose();
 				$element.tooltip('destroy');
 			});
         }
