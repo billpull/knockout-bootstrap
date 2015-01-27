@@ -8,7 +8,7 @@ knockout-bootstrap
 - jQuery ( no minimum version identified yet )
 - bootstrap >= 2.1.1
 
-A plugin that adds custom bindings for twitter bootstrap plugins such as tooltips and popovers.
+A plugin that adds custom bindings for Bootstrap plugins such as tooltips and popovers.
 
 [Docs](http://billpull.github.com/knockout-bootstrap)
 

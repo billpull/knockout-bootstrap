@@ -75,7 +75,7 @@ function setupKoBootstrap(koObject, $) {
         }
     };
 
-    // Bind Twitter Progress
+    // Bind Bootstrap Progress
     koObject.bindingHandlers.progress = {
         init: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
             var $element = $(element);
@@ -93,7 +93,7 @@ function setupKoBootstrap(koObject, $) {
         }
     };
 
-    // Bind Twitter Alert
+    // Bind Bootstrap Alert
     koObject.bindingHandlers.alert = {
         init: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
             var $element = $(element);
@@ -113,7 +113,7 @@ function setupKoBootstrap(koObject, $) {
         }
     };
 
-    // Bind Twitter Tooltip
+    // Bind Bootstrap Tooltip
     koObject.bindingHandlers.tooltip = {
         update: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
             var $element, options, tooltip;
@@ -152,7 +152,7 @@ function setupKoBootstrap(koObject, $) {
         }
     };
 
-    // Bind Twitter Popover
+    // Bind Bootstrap Popover
     koObject.bindingHandlers.popover = {
         init: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
             var $element = $(element);
@@ -232,7 +232,7 @@ function setupKoBootstrap(koObject, $) {
         }
     };
 
-    // Bind Twitter Modal
+    // Bind Bootstrap Modal
     koObject.bindingHandlers.modal = {
         init: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
 
