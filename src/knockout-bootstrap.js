@@ -116,7 +116,7 @@ function setupKoBootstrap(koObject, $) {
     // Bind Bootstrap Tooltip
     koObject.bindingHandlers.tooltip = {
         update: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
-            var $element, options, tooltip;
+            var $element, options, tooltip, subsc;
             options = koObject.utils.unwrapObservable(valueAccessor());
             $element = $(element);
 
@@ -133,7 +133,7 @@ function setupKoBootstrap(koObject, $) {
 
                 // "true" is the bootstrap default.
                 var origAnimation = options.animation || true;
-                options.title.subscribe(function () {
+                subsc = options.title.subscribe(function () {
                     if (isToolTipVisible) {
                         $element.data('bs.tooltip').options.animation = false; // temporarily disable animation to avoid flickering of the tooltip
                         $element.tooltip('fixTitle') // call this method to update the title
@@ -149,6 +149,10 @@ function setupKoBootstrap(koObject, $) {
             } else {
                 $element.tooltip(options);
             }
+			ko.utils.domNodeDisposal.addDisposeCallback(element, function () {
+				if (subsc) subsc.dispose();
+				$element.tooltip('destroy');
+			});
         }
     };
 
@@ -226,6 +230,9 @@ function setupKoBootstrap(koObject, $) {
             });
 
             $element.popover(options);
+			ko.utils.domNodeDisposal.addDisposeCallback(element, function () {
+				$element.popover('destroy');
+			});
 
             return { controlsDescendantBindings: true };
 
@@ -281,6 +288,10 @@ function setupKoBootstrap(koObject, $) {
                 $('.modal-backdrop').css({height: $(window).height(), position: 'fixed'});
             });
 
+			ko.utils.domNodeDisposal.addDisposeCallback(element, function () {
+				$element.modal('destroy');
+			});
+			
             return { controlsDescendantBindings: true };
 
         }
