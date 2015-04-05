@@ -149,7 +149,7 @@ function setupKoBootstrap(koObject, $) {
             } else {
                 $element.tooltip(options);
             }
-			ko.utils.domNodeDisposal.addDisposeCallback(element, function () {
+			koObject.utils.domNodeDisposal.addDisposeCallback(element, function () {
 				if (subsc) subsc.dispose();
 				$element.tooltip('destroy');
 			});
@@ -230,7 +230,7 @@ function setupKoBootstrap(koObject, $) {
             });
 
             $element.popover(options);
-			ko.utils.domNodeDisposal.addDisposeCallback(element, function () {
+			koObject.utils.domNodeDisposal.addDisposeCallback(element, function () {
 				$element.popover('destroy');
 			});
 
@@ -288,7 +288,7 @@ function setupKoBootstrap(koObject, $) {
                 $('.modal-backdrop').css({height: $(window).height(), position: 'fixed'});
             });
 
-			ko.utils.domNodeDisposal.addDisposeCallback(element, function () {
+			koObject.utils.domNodeDisposal.addDisposeCallback(element, function () {
 				$element.modal('destroy');
 			});
 			
