@@ -185,6 +185,7 @@ function setupKoBootstrap(koObject, $) {
                     y: button.outerHeight()
                 };
 
+                koObject.cleanNode(popoverEl[0]);
                 if (data) {
                     koObject.applyBindings({template: template, data: data}, popoverEl[0]);
                 }
@@ -268,10 +269,16 @@ function setupKoBootstrap(koObject, $) {
                 modal.html($('#'+template).html());
             }
 
+            // As modal is not destroyed we want the data to be up to date.
+            var original = modal.html();
 
             modal.modal(options);
 
             $element.on('click', function() {
+
+                //replace modal with original template and clean node and initialize with new data.
+                modal.html(original);
+                koObject.cleanNode(modal[0]);
                 if (data) {
                     koObject.applyBindings({
                         template: template,
