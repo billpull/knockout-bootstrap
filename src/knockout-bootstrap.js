@@ -164,7 +164,7 @@ function setupKoBootstrap(koObject, $) {
             var template = popoverBindingValues.template || false;
             var options = popoverBindingValues.options || {title: 'popover'};
             var data = popoverBindingValues.data || false;
-            var controlDecendents = popoverBindingValues.controlDecendents;
+            var controlDecendants = popoverBindingValues.controlDecendants;
             if (template !== false) {
                 if (data) {
                     options.content = "<!-- ko template: { name: template, if: data, data: data } --><!-- /ko -->";
@@ -236,7 +236,7 @@ function setupKoBootstrap(koObject, $) {
 				$element.popover('destroy');
 			});
 
-            return { controlsDescendantBindings: typeof controlDecendents == 'undefined' ? true : controlDecendents };
+            return { controlsDescendantBindings: typeof controlDecendants == 'undefined' ? true : controlDecendants };
 
         }
     };
