@@ -164,6 +164,7 @@ function setupKoBootstrap(koObject, $) {
             var template = popoverBindingValues.template || false;
             var options = popoverBindingValues.options || {title: 'popover'};
             var data = popoverBindingValues.data || false;
+            var controlDescendants = popoverBindingValues.controlDescendants;
             if (template !== false) {
                 if (data) {
                     options.content = "<!-- ko template: { name: template, if: data, data: data } --><!-- /ko -->";
@@ -235,7 +236,7 @@ function setupKoBootstrap(koObject, $) {
 				$element.popover('destroy');
 			});
 
-            return { controlsDescendantBindings: true };
+            return { controlsDescendantBindings: typeof controlDescendants == 'undefined' ? true : controlDescendants };
 
         }
     };
@@ -298,7 +299,7 @@ function setupKoBootstrap(koObject, $) {
 			koObject.utils.domNodeDisposal.addDisposeCallback(element, function () {
 				$element.modal('destroy');
 			});
-			
+
             return { controlsDescendantBindings: true };
 
         }
