@@ -201,6 +201,7 @@ function setupKoBootstrap(koObject, $) {
 
                 popoverEl.find('button[data-dismiss="popover"]').click(function() {
                     button.popover('hide');
+                    $element.data("bs.popover").inState.click = false;
                 });
 
                 switch (options.placement) {
